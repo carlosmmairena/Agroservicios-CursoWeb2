@@ -1,6 +1,7 @@
-import { IsDate, IsEmail, IsNotEmpty, MinLength } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import * as bcrypt from 'bcryptjs';
+import { IsDateString, IsEmail, IsNotEmpty, MinDate, MinLength } from "class-validator";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { genSaltSync, compareSync, hashSync } from 'bcryptjs';
+import { Persona } from "./Persona";
 
 
 @Entity("Usuarios")
@@ -10,25 +11,10 @@ export class Usuario {
     id: number;
 
 
-    @Column()
-    @IsNotEmpty()
-    nombre: string;
-
-
-    @Column()
-    @IsNotEmpty()
-    apellido: string;
-
-
-    @Column()
-    @IsNotEmpty()
-    apellido2: string;
-
-
-    @Column()
-    @IsDate()
-    @IsNotEmpty()
-    fechaNac: Date;
+    @IsDateString()
+    @MinDate(new Date())
+    @Column({ type: 'date' })
+    fechaRegistro: Date;
 
 
     @Column({ unique: true, nullable: false })
@@ -48,14 +34,19 @@ export class Usuario {
     estado: boolean;
 
 
+    @OneToOne(() => Persona, persona => persona.usuario, { eager: true })
+    @JoinColumn({  name: 'idPersona', referencedColumnName: 'id' })
+    persona: Persona;
+
+
     hashPassword() : void {
-        const salt= bcrypt.genSaltSync(10);
-        this.password= bcrypt.hashSync(this.password, salt);
+        const salt    = genSaltSync(10);
+        this.password = hashSync(this.password, salt);
     }
 
 
     checkPassword(password:string): boolean {
-        return bcrypt.compareSync(password, this.password);
+        return compareSync(password, this.password);
 
     }
 
