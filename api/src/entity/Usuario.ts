@@ -1,7 +1,8 @@
 import { IsDateString, IsEmail, IsNotEmpty, MinDate, MinLength } from "class-validator";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { genSaltSync, compareSync, hashSync } from 'bcryptjs';
 import { Persona } from "./Persona";
+import { Consejo } from "./Consejo";
 
 
 @Entity("Usuarios")
@@ -37,6 +38,10 @@ export class Usuario {
     @OneToOne(() => Persona, persona => persona.usuario, { eager: true })
     @JoinColumn({  name: 'idPersona', referencedColumnName: 'id' })
     persona: Persona;
+
+
+    @ManyToOne(() => Consejo, consejo => consejo.usuario)
+    consejos: Consejo[];
 
 
     hashPassword() : void {
