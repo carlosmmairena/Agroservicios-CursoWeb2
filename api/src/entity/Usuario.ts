@@ -1,5 +1,5 @@
 import { IsDateString, IsEmail, IsNotEmpty, MinDate, MinLength } from "class-validator";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { genSaltSync, compareSync, hashSync } from 'bcryptjs';
 import { Persona } from "./Persona";
 import { Consejo } from "./Consejo";
@@ -40,7 +40,7 @@ export class Usuario {
     persona: Persona;
 
 
-    @ManyToOne(() => Consejo, consejo => consejo.usuario)
+    @OneToMany(() => Consejo, consejo => consejo.usuario)
     consejos: Consejo[];
 
 
