@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn
 import { genSaltSync, compareSync, hashSync } from 'bcryptjs';
 import { Persona } from "./Persona";
 import { Consejo } from "./Consejo";
+import { Proforma } from "./Proforma";
 
 
 @Entity("Usuarios")
@@ -42,6 +43,10 @@ export class Usuario {
 
     @OneToMany(() => Consejo, consejo => consejo.usuario)
     consejos: Consejo[];
+
+
+    @OneToMany(() => Proforma, proforma => proforma.usuario)
+    proformas: Proforma[];
 
 
     hashPassword() : void {

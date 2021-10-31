@@ -1,6 +1,7 @@
 import { IsBoolean, IsDateString, IsEmail, IsInt, IsNotEmpty, Min, MinDate } from "class-validator";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Persona } from "./Persona";
+import { Proforma } from "./Proforma";
 
 
 @Entity("Clientes")
@@ -41,5 +42,9 @@ export class Cliente {
     @OneToOne(() => Persona, persona => persona.cliente, { eager: true })
     @JoinColumn({  name: 'idPersona', referencedColumnName: 'id' })
     persona: Persona;
+
+
+    @OneToMany(() => Proforma, proforma => proforma.cliente)
+    proformas: Proforma[];
 
 }

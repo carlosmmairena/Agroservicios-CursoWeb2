@@ -1,6 +1,7 @@
 import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min } from "class-validator";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Construccion } from "./Construccion";
+import { DetalleProforma } from "./DetalleProforma";
 import { Insumo } from "./Insumo";
 import { Veterinario } from "./Veterinario";
 
@@ -61,6 +62,10 @@ export class Producto {
 
 
     @OneToOne(() => Construccion, construccion => construccion.producto)
-    construccion: Construccion
+    construccion: Construccion;
+
+
+    @OneToMany(() => DetalleProforma, detalleProducto => detalleProducto.producto)
+    detalleProformas: DetalleProforma[];
 
 }

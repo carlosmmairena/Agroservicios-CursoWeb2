@@ -1,5 +1,6 @@
-import { IsDateString, IsNotEmpty, IsNumber, Max, Min } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber, Max, MaxLength, Min, MinDate } from "class-validator";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Cliente } from "./Cliente";
 import { DetalleProforma } from "./DetalleProforma";
 import { Usuario } from "./Usuario";
 
@@ -11,27 +12,27 @@ export class Proforma {
     id: number;
 
 
-    /* @ManyToOne(() => Usuario, user => user.proforma)
+    @ManyToOne(() => Usuario, usuario => usuario.proformas)
     @JoinColumn({ name: "idUsuario", referencedColumnName: "id" })
-    usuario: Usuario; */
+    usuario: Usuario;
 
 
-    /*
-    @ManyToOne(() => Cliente, cliente => cliente.proforma)
+    @ManyToOne(() => Cliente, cliente => cliente.proformas)
     @JoinColumn({ name: "idCliente", referencedColumnName: "id" })
     cliente: Cliente;
-    */
 
 
-    @OneToMany(() => DetalleProforma, detalle => detalle.proforma, { cascade: true })
-    detallesProforma: DetalleProforma[];
+    @OneToMany(() => DetalleProforma, detalle => detalle.proforma)
+    detallesProformas: DetalleProforma[];
 
 
+    @MinDate(new Date())
     @IsDateString()
-    @Column({type: 'date', default: '2021-01-01'})
+    @Column({ type: 'date' })
     fechaEmisiom: Date;
 
 
+    @MaxLength(100)
     @IsNotEmpty()
     @Column({ default: 'efectivo' })
     formaPago: string;
