@@ -1,5 +1,8 @@
-import { IsNotEmpty } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min } from "class-validator";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Construccion } from "./Construccion";
+import { Insumo } from "./Insumo";
+import { Veterinario } from "./Veterinario";
 
 
 @Entity("Productos")
@@ -9,38 +12,55 @@ export class Producto {
     id: number;
 
 
-    @Column()
     @IsNotEmpty()
+    @MaxLength(100)
+    @Column()
     nombre: string;
 
 
-    @Column()
     @IsNotEmpty()
+    @Column({ type: 'text' })
     descripcion: string;
 
 
-    @Column()
+    @MaxLength(50)
     @IsNotEmpty()
+    @Column()
     marca: string;
 
 
+    @IsNumber()
+    @Min(0)
     @Column()
-    @IsNotEmpty()
     precioUnitario: number;
 
 
+    @IsNumber()
+    @Min(0)
     @Column()
-    @IsNotEmpty()
     stock: number;
 
 
-    @Column()
+    @MaxLength(50)
     @IsNotEmpty()
+    @Column()
     unidadMedida: string;
 
 
-    @Column()
-    @IsNotEmpty()
+    @IsBoolean()
+    @Column({ default: true })
     estado: boolean;
+
+
+    @OneToOne(() => Veterinario, veterinario => veterinario.producto)
+    veterinario: Veterinario
+
+
+    @OneToOne(() => Insumo, insumo => insumo.producto)
+    insumo: Insumo
+
+
+    @OneToOne(() => Construccion, construccion => construccion.producto)
+    construccion: Construccion
 
 }
