@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsBoolean, IsDateString, IsNotEmpty, MinDate } from "class-validator";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Animal } from "./Animal";
 
@@ -10,32 +10,24 @@ export class Adopcion {
     id: number;
 
 
-    @Column()
-    idAnimal: number;
-
-
-    @Column()
-    @IsNotEmpty()
-    vacunas: boolean;
+    @IsBoolean()
+    @Column({ default: true })
+    vacunado: boolean;
 
     
-    @Column()
-    @IsNotEmpty()
+    @IsDateString()
+    @MinDate(new Date())
+    @Column({ nullable: false })
     fechaAdopcion: Date;
 
 
-    @Column()
     @IsNotEmpty()
+    @Column({ type: 'text' })
     descripcion: string;
 
 
-    @Column()
-    @IsNotEmpty()
-    estado: boolean;
-
-
-    @OneToOne(type => Animal, animal => animal, { nullable: false, eager:true })
-    @JoinColumn({name: 'idAnimal', referencedColumnName:'id'})
-    animal: Animal;  
+    @OneToOne(() => Animal, animal => animal.adopcion, { nullable: false, eager:true })
+    @JoinColumn({ name: 'idAnimal', referencedColumnName:'id' })
+    animal: Animal;
 
 }

@@ -1,5 +1,6 @@
 import { IsNotEmpty } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Producto } from "./Producto";
 
 
 @Entity("Veterinarios")
@@ -13,11 +14,10 @@ export class Veterinario {
     @IsNotEmpty()
     nombre: string;
 
-    /*
+
     @OneToOne(() => Producto, producto => producto.veterinario)
     @JoinColumn({ name: "idProducto", referencedColumnName: "id" })
-    producto: Producto;
-     */
+    producto: Producto;    
 
 
     @Column()

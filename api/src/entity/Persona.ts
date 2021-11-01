@@ -1,6 +1,7 @@
 import { IsDate, IsNotEmpty } from "class-validator";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Cliente } from "./Cliente";
+import { Usuario } from "./Usuario";
 
 
 @Entity("Personas")
@@ -31,8 +32,10 @@ export class Persona {
     fechaNac: Date;
 
 
-    @OneToOne(cliente => Cliente)
-    @JoinColumn()
-    client: Cliente;
-  
+    @OneToOne(() => Cliente, cliente => cliente.persona)
+    cliente: Cliente;
+
+    @OneToOne(() => Usuario, usuario => usuario.persona)
+    usuario: Usuario;
+
 }

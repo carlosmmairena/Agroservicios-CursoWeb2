@@ -1,27 +1,27 @@
-import { IsNotEmpty } from "class-validator";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IsBoolean, IsNotEmpty, MaxLength } from "class-validator";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Animal } from "./Animal";
 
 
 @Entity("Razas")
 export class Raza {
- 
+
     @PrimaryGeneratedColumn()
-    idRaza: number;
+    id: number;
 
 
-    @Column()
+    @MaxLength(50)
     @IsNotEmpty()
+    @Column({ unique: true })
     nombre: string;
 
 
-    @Column()
-    @IsNotEmpty()
+    @IsBoolean()
+    @Column({ default: true })
     estado: boolean;
 
 
-    @OneToMany(type => Animal, animal => animal.raza)
-    @JoinColumn()
-    animal: Animal[];
+    @OneToMany(() => Animal, animal => animal.raza)
+    animales: Animal[];
 
 }
