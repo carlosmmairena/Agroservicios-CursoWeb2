@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty } from "class-validator";
+import { IsDateString, IsNotEmpty, validate, ValidationError } from "class-validator";
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Cliente } from "./Cliente";
 import { Usuario } from "./Usuario";
@@ -27,7 +27,7 @@ export class Persona {
 
   
     @Column()
-    @IsDate()
+    @IsDateString()
     @IsNotEmpty()
     fechaNac: Date;
 
@@ -37,5 +37,13 @@ export class Persona {
 
     @OneToOne(() => Usuario, usuario => usuario.persona)
     usuario: Usuario;
+
+    static async validate(personaToSave: Persona) : Promise<ValidationError[]> {
+
+        const validateOptions = { validationError: { target:false, value:false} };
+        const errors          = await validate(personaToSave, validateOptions);
+
+        return errors;
+    }
 
 }
