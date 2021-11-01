@@ -55,7 +55,7 @@ export class Usuario {
     }
 
 
-    checkPassword(password:string): boolean {
+    isCorrectPassword(password:string): boolean {
         return compareSync(password, this.password);
 
     }
