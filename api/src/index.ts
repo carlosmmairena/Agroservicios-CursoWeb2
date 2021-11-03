@@ -24,6 +24,6 @@ createConnection().then(async connection => {
     // start express server
     app.listen(PORT);
 
-    console.log(`The server has started on port ${PORT}. Open http://localhost:${PORT}/api/usuario to see results`);
+    console.log(`The server has started on port ${PORT}. Open http://localhost:${PORT}/api/login`);
 
 }).catch(error => console.log(error));
