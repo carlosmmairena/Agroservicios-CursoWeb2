@@ -1,0 +1,23 @@
+{{isLog}} - LOGEANDO 
+
+<mat-toolbar color="warn">
+
+
+<ng-container *ngIf="!isLog; else viewMenu">
+    <span>AgroServicios</span>
+    <span class="spacer"></span>
+    <div>
+        <a mat-button [routerLink]="'/login'">Login</a>
+        <a mat-button>Logout</a>
+        <a mat-button [routerLink]="'/admin'">Admin</a>
+    </div>
+</ng-container>
+    <button (click)="isLog = !isLog">LOGIN</button>
+</mat-toolbar>
+
+<ng-template #viewMenu>
+    <button mat-icon-button (click)="onToggleSideNav()">
+
+        <mat-icon>menu</mat-icon>
+    </button>
+</ng-template>

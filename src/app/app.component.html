@@ -1,3 +1,40 @@
 
-<app-home> </app-home>
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+ 
+    <mat-sidenav #sidenav mode="side">
+        <mat-toolbar>MENU</mat-toolbar>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Productos</button>
+        </mat-nav-list>
+
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Construcción</button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Veterinario</button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Adopciones</button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Consejos</button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">Insumos</button>
+        </mat-nav-list>
+
+  
+
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>  
+      <app-header (toggleSideNav)="sidenav.toggle()"> </app-header>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+
+
