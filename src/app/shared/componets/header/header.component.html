@@ -4,12 +4,13 @@
 
 
 <ng-container *ngIf="!isLog; else viewMenu">
-    <span>AgroServicios</span>
+    <span >AgroServicios</span>
     <span class="spacer"></span>
     <div>
         <a mat-button [routerLink]="'/login'">Login</a>
         <a mat-button>Logout</a>
         <a mat-button [routerLink]="'/admin'">Admin</a>
+        <a mat-button [routerLink]="'/home'">home</a>
     </div>
 </ng-container>
     <button (click)="isLog = !isLog">LOGIN</button>
