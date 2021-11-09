@@ -1,6 +1,13 @@
 mat-sidenav{
     width: 180px;
+    
 }
 mat-sidenav-container{
     height: 100%;
+}
+
+button{
+    width: 140px;
+    //alinea el texto dentro de los botones
+    text-align: left;
 }
