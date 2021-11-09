@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min, validate, ValidationError } from "class-validator";
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Construccion } from "./Construccion";
 import { DetalleProforma } from "./DetalleProforma";
@@ -15,7 +15,7 @@ export class Producto {
 
     @IsNotEmpty()
     @MaxLength(100)
-    @Column()
+    @Column({ unique: true })
     nombre: string;
 
 

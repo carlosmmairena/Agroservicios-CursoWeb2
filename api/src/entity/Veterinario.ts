@@ -8,11 +8,6 @@ export class Veterinario {
 
     @PrimaryGeneratedColumn()
     id: number;
- 
-
-    @Column()
-    @IsNotEmpty()
-    nombre: string;
 
 
     @OneToOne(() => Producto, producto => producto.veterinario)
