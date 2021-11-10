@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import { Producto } from "../entity/Producto";
 import { isNull, isUndefined } from "util";
+import { Veterinario } from "../entity/Veterinario";
 
 export class ProductoController {
 
@@ -35,60 +36,63 @@ export class ProductoController {
         response.status(200).json(product);
     }
 
-/* 
-    static save = async (request: Request, response: Response) => {
+
+    /**
+     * Guarda un producto de tipo Veterinario.
+     * 
+     * @param request 
+     * @param response 
+     * @returns status
+     */
+    static saveVeterinario = async (request: Request, response: Response) => {
         try {
-            const usuarioRepository = getRepository(Usuario);
-            const { correo, password, fechaNacimiento, nombre, apellido1, apellido2 } = request.body;
+            const productRepository = getRepository(Producto);
+            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal } = request.body;
             
-            const dataValidated = Usuario.checkData({ correo, password, fechaNacimiento, nombre, apellido1, apellido2 });
+            const dataValidated = Veterinario.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal });
             
             if (dataValidated.hasErrors) {
                 return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
             }
 
-            const anotherUser = await usuarioRepository.findOne({ select: ['id', 'correo'], where: {correo: correo} });
-            if(anotherUser) {
-                return response.status(422).json({ message: `Ya existe otro usuario con el correo ${correo}`});
+            // TODO: Debería haber un 'código de producto' para que el usuario pueda identificar de manera distinta un producto...
+            const anotherProduct = await productRepository.findOne({ select: ['id', 'estado', 'nombre'], where: {nombre: nombre} });
+            if(anotherProduct) {
+                return response.status(422).json({ message: `Ya existe otro producto con el nombre: ${nombre}`});
             }
 
 
-            const usuarioAGuardar         = new Usuario();
-            usuarioAGuardar.correo        = correo;
-            usuarioAGuardar.estado        = true;
-            usuarioAGuardar.fechaRegistro = new Date();
-            usuarioAGuardar.password      = password;
-            usuarioAGuardar.hashPassword();
-    
-            const persona     = new Persona();
-            persona.nombre    = nombre;
-            persona.apellido1 = apellido1;
-            persona.apellido2 = apellido2;
-            persona.fechaNac  = fechaNacimiento;
+            const productToSave          = new Producto();
+            productToSave.nombre         = nombre;
+            productToSave.descripcion    = descripcion;
+            productToSave.marca          = marca;
+            productToSave.precioUnitario = precioUnitario;
+            productToSave.stock          = stock;
+            productToSave.unidadMedida   = unidadMedida;
+            productToSave.estado         = estado;
 
-            const formatoDatosUsuarioValidado = await Usuario.validate(usuarioAGuardar);
-            const formatoDatosPersonaValidado = await Persona.validate(persona);
+            const veterinarioToSave = new Veterinario();
 
-            if (formatoDatosUsuarioValidado.length || formatoDatosPersonaValidado.length) {
-                return response.status(422).json(
-                    { message: "Los datos no cumplen con el formato adecuado", 
-                    details: [formatoDatosUsuarioValidado, formatoDatosPersonaValidado]}
-                )
+            veterinarioToSave.tipoAnimal = tipoAnimal;
+            veterinarioToSave.producto   = productToSave;
+
+            //const formatoDatosValidado = await Producto.validate(productToSave);
+            const formatoDatosVeterinarioValidado = await Veterinario.validate(veterinarioToSave);
+
+            if (formatoDatosVeterinarioValidado.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
             }
 
-            const personaRepository = getRepository(Persona);
-            await personaRepository.save(persona);
-
-            usuarioAGuardar.persona = persona;
-            const usuarioGuardado = await usuarioRepository.save(usuarioAGuardar);
-            return response.status(201).json({ message: 'Usuario registrado', usuario: usuarioGuardado });
+            /* const productSaved = await productRepository.save(productToSave); */
+            const productSaved = {};
+            return response.status(201).json({ message: 'Producto registrado', producto: productSaved });
 
         } catch (error) {
             return response.status(503).json({ message: "Algo ha fallado...", errors: error });
         }
     }
 
-
+/* 
     static remove = async (request: Request, response: Response) => {
         const userRepository = getRepository(Usuario);
         let userToRemove = await userRepository.findOne(request.params.id);
