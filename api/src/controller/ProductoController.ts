@@ -6,9 +6,9 @@ import { Veterinario } from "../entity/Veterinario";
 
 export class ProductoController {
 
-    static all = async (request: Request, response: Response) => {
+    static allVeterinario = async (request: Request, response: Response) => {
         const productRepository = getRepository(Producto);
-        const products = await productRepository.find();
+        const products = await productRepository.find({ relations: ['veterinario'] });
         
         if (products.length < 1) {
             return response.status(404).json({ message: 'No hay productos registrados.' });
@@ -76,16 +76,18 @@ export class ProductoController {
             veterinarioToSave.tipoAnimal = tipoAnimal;
             veterinarioToSave.producto   = productToSave;
 
-            //const formatoDatosValidado = await Producto.validate(productToSave);
             const formatoDatosVeterinarioValidado = await Veterinario.validate(veterinarioToSave);
 
             if (formatoDatosVeterinarioValidado.length) {
                 return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
             }
 
-            /* const productSaved = await productRepository.save(productToSave); */
-            const productSaved = {};
-            return response.status(201).json({ message: 'Producto registrado', producto: productSaved });
+            const productSaved = await productRepository.save(productToSave);
+            const veterinarioProductRepository = getRepository(Veterinario);
+
+            const veterinarioProductSaved = await veterinarioProductRepository.save(veterinarioToSave);
+            
+            return response.status(201).json({ message: 'Producto registrado', producto: veterinarioProductSaved });
 
         } catch (error) {
             return response.status(503).json({ message: "Algo ha fallado...", errors: error });
