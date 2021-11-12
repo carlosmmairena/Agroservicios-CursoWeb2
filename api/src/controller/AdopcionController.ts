@@ -1,125 +1,107 @@
-import { validate } from "class-validator";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Adopcion } from "../entity/Adopcion";
 
 export class AdopcionController {
-    static all = async (req: Request, res: Response) => {
-        const adopcionRepo = getRepository(Adopcion);
+    static all = async (request: Request, response: Response) => {
+        
+        const adopcionRepository = getRepository(Adopcion);
+        const adopciones = await adopcionRepository.find({ where: { estado: true } });
+        
+        if (adopciones.length < 1) {
+            return response.status(404).json({ message: 'Adopciones activas' });
+        }
+        
+        return response.status(200).json(adopciones);
+    }
 
-        let lista;
 
+    static findById = async (request: Request, response: Response) => {
         try {
-            lista = await adopcionRepo.find({ select: ['id', 'vacunado', 'fechaAdopcion', 'descripcion'], where: { estado: 1 } });
-        }
-        catch (error) {
-            res.status(404).json({ mensaje: 'Algo fue mal!' });
-        }
+            const adopcionRepository = getRepository(Adopcion);
 
-        if (lista.length > 0) {
-            res.send(lista);
-        } else {
-            res.status(404).json({ mensaje: 'No hay resultados!' });
+            const { id } = request.params;
+
+            const adopcion = await adopcionRepository.findOne(id);
+
+            if (!adopcion) {
+                return response.status(404).json({ message: `No se encuentra una adopción con ID ${id}` });
+            }
+
+            return response.status(200).json({ adopcion: adopcion });
+
+        } catch (error) {
+            return response.status(503).json({ message: "Algo ha fallado...", errors: error });
         }
     }
 
-    static findById = async (req: Request, res: Response) => {
-        const adopcionRepo = getRepository(Adopcion);
 
-        const { id } = req.params;
-
+    static save = async (request: Request, response: Response) => {
         try {
-            const adopcion = await adopcionRepo.findOneOrFail(id,
-                { select: ['id', 'vacunado', 'fechaAdopcion', 'descripcion'] });
+            const adopcionRepository = getRepository(Adopcion);
+            const { vacunado, fechaAdopcion, descripcion } = request.body;
 
-            res.send(adopcion);
-        }
-        catch (error) {
-            res.status(404).json({ mensaje: 'No se encontro el adopcion!' });
-        }
+            const dataValidated = Adopcion.checkData({ vacunado, fechaAdopcion, descripcion });
+        
+            if (dataValidated.hasErrors) {
+                return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
+            }
+        
+            const adopcionToSave         = new Adopcion();
+            adopcionToSave.vacunado      = vacunado;
+            adopcionToSave.fechaAdopcion = fechaAdopcion;
+            adopcionToSave.descripcion   = descripcion;
+            // TODO: Falta asignar el objeto animal...
+            //adopcionToSave.animal        = animal;
+            
+            const errorsFormat = await Adopcion.validate(adopcionToSave);
+            if (errorsFormat.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: errorsFormat });
+            }
 
+            const adopcionSaved = await adopcionRepository.save(adopcionToSave);
+            return response.status(201).json({ message: 'Adopción registrada.', adopcion: adopcionSaved });
+
+        } catch (error) {
+            return response.status(503).json({ message: "Algo ha fallado...", errors: error });
+        }
     }
 
-    static save = async (req: Request, res: Response) => {
 
-        const adopcionRepo = getRepository(Adopcion);
-        const { vacunado, fechaAdopcion, descripcion} = req.body;
-
-        let adopcion = new Adopcion();
-
-        if (!vacunado) {
-            res.status(404).json({ mensaje: 'Falta la vacunacion!' });
-        }
-        if (!fechaAdopcion) {
-            res.status(404).json({ mensaje: 'Falta fechaAdopcion!' });
-        }
-        if (!descripcion) {
-            res.status(404).json({ mensaje: 'Falta la descripcion!' });
-        }
-
-        adopcion.vacunado = vacunado;
-        adopcion.fechaAdopcion = fechaAdopcion;
-        adopcion.descripcion = descripcion;
-
-        //validacion de decoredares de class validator
-        const validateOpt = { validationError: { target: false, value: false } };
-        const errores = await validate(adopcion, validateOpt);
-        //valiado si hay errores
-        if (errores.length > 0) {
-            return res.status(400).json(errores);
-        }
-
-        //guardo
+    static modify = async (request: Request, response: Response) => {
         try {
-            await adopcionRepo.save(adopcion);
+            const adopcionRepository = getRepository(Adopcion);
+            const { id } = request.params;
+            const { vacunado, fechaAdopcion, descripcion } = request.body;
+
+            const dataValidated = Adopcion.checkData({ vacunado, fechaAdopcion, descripcion });
+        
+            if (dataValidated.hasErrors) {
+                return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
+            }
+        
+            const adopcionToEdit         = await adopcionRepository.findOne(id);
+            if (!adopcionToEdit) {
+                return response.status(404).json({ message: `No se encuentra una adopción con ID ${id}` });
+            }
+        
+            adopcionToEdit.vacunado      = vacunado;
+            adopcionToEdit.fechaAdopcion = fechaAdopcion;
+            adopcionToEdit.descripcion   = descripcion;
+            // TODO: Falta asignar el objeto animal...
+            //adopcionToEdit.animal        = animal;
+            
+            const errorsFormat = await Adopcion.validate(adopcionToEdit);
+            if (errorsFormat.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: errorsFormat });
+            }
+
+            const adopcionSaved = await adopcionRepository.save(adopcionToEdit);
+            return response.status(201).json({ message: 'Adopción modificada.', adopcion: adopcionSaved });
+
         } catch (error) {
-            return res.status(409).json({ mensaje: 'El adopcion ya existe!' })
+            return response.status(503).json({ message: "Algo ha fallado...", errors: error });
         }
-
-        res.status(201).send("adopcion almacenado");
-    }
-
-    static modify = async (req: Request, res: Response) => {
-        const adopcionRepo = getRepository(Adopcion);
-        const { id } = req.params;
-        const { vacunado, fechaAdopcion, descripcion } = req.body;
-        let adopcion;
-
-        try {
-            adopcion = await adopcionRepo.findOneOrFail(id);
-        } catch (error) {
-            res.status(404).json({ mensaje: 'No se encontro el adopcion!' });
-        }
-
-        if (!vacunado) {
-            res.status(404).json({ mensaje: 'Falta el vacunado!' });
-        }
-        if (!fechaAdopcion) {
-            res.status(404).json({ mensaje: 'Falta fechaAdopcion!' });
-        }
-        if (!descripcion) {
-            res.status(404).json({ mensaje: 'Falta la descripcion!' });
-        }
-
-        adopcion.vacunado = vacunado;
-        adopcion.fechaAdopcion = fechaAdopcion;
-        adopcion.descripcion = descripcion;
-
-        //validacion de decoredares de class validator
-        const validateOpt = { validationError: { target: false, value: false } };
-        const errores = await validate(adopcion, validateOpt);
-        //valiado si hay errores
-        if (errores.length > 0) {
-            return res.status(400).json(errores);
-        }
-
-        try {
-            await adopcionRepo.save(adopcion);
-        } catch (error) {
-            return res.status(409).json({ mensaje: 'Ya existe!' })
-        }
-
-        res.status(201).send("adopcion modificada!");
     }
 
 }
