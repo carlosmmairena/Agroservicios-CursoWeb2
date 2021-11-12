@@ -1,4 +1,4 @@
-import { IsNotEmpty, MaxLength, MinLength } from "class-validator";
+import { IsBoolean, IsNotEmpty, MaxLength, MinLength } from "class-validator";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
@@ -19,6 +19,11 @@ export class Consejo {
     @IsNotEmpty()
     @Column({ default: 'Sin fotografía.' })
     foto: string;
+
+
+    @IsBoolean()
+    @Column({ default: true })
+    estado: boolean;
 
 
     @ManyToOne(() => Usuario, usuario => usuario.consejos)
