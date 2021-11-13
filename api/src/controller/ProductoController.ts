@@ -82,12 +82,67 @@ export class ProductoController {
                 return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
             }
 
-            const productSaved = await productRepository.save(productToSave);
+            await productRepository.save(productToSave);
             const veterinarioProductRepository = getRepository(Veterinario);
 
             const veterinarioProductSaved = await veterinarioProductRepository.save(veterinarioToSave);
             
             return response.status(201).json({ message: 'Producto registrado', producto: veterinarioProductSaved });
+
+        } catch (error) {
+            return response.status(503).json({ message: "Algo ha fallado...", errors: error });
+        }
+    }
+
+
+    static modifyVeterinario = async (request: Request, response: Response) => {
+        try {
+            const productRepository = getRepository(Producto);
+            const { id } = request.params;
+            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal } = request.body;
+            
+            const dataValidated = Veterinario.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal });
+            
+            if (dataValidated.hasErrors) {
+                return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
+            }
+
+            // TODO: Debería haber un 'código de producto' para que el usuario pueda identificar de manera distinta un producto...
+            const productToEdit = await productRepository.findOne(id, { relations: ['veterinario'] });
+            if(!productToEdit) {
+                return response.status(404).json({ message: `No se encuentra el producto con ID: ${id}`});
+            }
+
+            const anotherProduct = await productRepository.findOne({ select: ['id', 'nombre'], where: {nombre: nombre} });
+            if((anotherProduct) && (anotherProduct.id != productToEdit.id)) {
+                return response.status(422).json({ message: `Ya existe otro producto con el nombre: ${nombre}`});
+            }
+
+
+            productToEdit.nombre         = nombre;
+            productToEdit.descripcion    = descripcion;
+            productToEdit.marca          = marca;
+            productToEdit.precioUnitario = precioUnitario;
+            productToEdit.stock          = stock;
+            productToEdit.unidadMedida   = unidadMedida;
+            productToEdit.estado         = estado;
+
+            const veterinarioToEdit = productToEdit.veterinario;
+
+            veterinarioToEdit.tipoAnimal = tipoAnimal;
+            veterinarioToEdit.producto   = productToEdit;
+
+            const formatoDatosVeterinarioValidado = await Veterinario.validate(veterinarioToEdit);
+
+            if (formatoDatosVeterinarioValidado.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
+            }
+
+            const veterinarioProductRepository = getRepository(Veterinario);
+            await productRepository.save(productToEdit);
+            await veterinarioProductRepository.save(veterinarioToEdit);
+            
+            return response.status(201).json({ message: 'Producto actualizado'});
 
         } catch (error) {
             return response.status(503).json({ message: "Algo ha fallado...", errors: error });
