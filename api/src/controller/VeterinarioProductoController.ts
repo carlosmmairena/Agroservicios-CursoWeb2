@@ -4,7 +4,7 @@ import { Producto } from "../entity/Producto";
 import { isNull, isUndefined } from "util";
 import { Veterinario } from "../entity/Veterinario";
 
-export class ProductoController {
+export class VeterinarioProductoController {
 
     static allVeterinario = async (request: Request, response: Response) => {
         const productRepository = getRepository(Producto);
