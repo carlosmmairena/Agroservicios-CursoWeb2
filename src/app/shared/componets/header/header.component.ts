@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   isLog = false;
-  constructor() { }
+  constructor(private srvAuth: AuthService) { }
 
   @Output() toggleSideNav= new EventEmitter<void>();
 
@@ -19,4 +20,9 @@ export class HeaderComponent implements OnInit {
     this.toggleSideNav.emit();
   }
 
+  //metodo de Logout
+  onlogout(){
+    this.srvAuth.onlogout();
+    
+  }
 }
