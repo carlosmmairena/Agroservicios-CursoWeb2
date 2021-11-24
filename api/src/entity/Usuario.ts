@@ -1,4 +1,4 @@
-import { IsDate, IsEmail, IsNotEmpty, MinLength, validate, ValidationError } from "class-validator";
+import { IsDateString, IsEmail, IsNotEmpty, MinLength, validate, ValidationError } from "class-validator";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { genSaltSync, compareSync, hashSync } from 'bcryptjs';
 import { Persona } from "./Persona";
@@ -13,7 +13,7 @@ export class Usuario {
     id: number;
 
 
-    @IsDate()
+    @IsDateString()
     @Column({ type: 'date' })
     fechaRegistro: Date;
 
