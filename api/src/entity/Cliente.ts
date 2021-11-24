@@ -1,5 +1,7 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IsBoolean, IsDateString, IsEmail, IsInt, IsNotEmpty, Min, MinDate } from "class-validator";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Persona } from "./Persona";
+import { Proforma } from "./Proforma";
 
 
 @Entity("Clientes")
@@ -9,28 +11,40 @@ export class Cliente {
     id: number;
 
 
-    @Column()
     @IsNotEmpty()
+    @Column()
+    direccion: string;
+
+
+    @IsDateString()
+    @MinDate(new Date())
+    @Column({ type: 'date' })
+    fechaRegistro: Date;
+
+
     @IsEmail()
-    Correo: string;
-
-
-    @Column()
     @IsNotEmpty()
-    TipoCliente: string;
+    @Column({ unique: true  })
+    correo: string; 
 
 
-    @Column()
+    @IsInt()
     @IsNotEmpty()
-    ApliDesc: number;
- 
-
     @Column()
-    @IsNotEmpty()
-    DescuMax: number;
+    telefono: boolean;
 
 
+    @IsBoolean()
     @Column()
-    @IsNotEmpty()
-    Estado: Boolean;
+    estado: boolean;
+
+
+    @OneToOne(() => Persona, persona => persona.cliente, { eager: true })
+    @JoinColumn({  name: 'idPersona', referencedColumnName: 'id' })
+    persona: Persona;
+
+
+    @OneToMany(() => Proforma, proforma => proforma.cliente)
+    proformas: Proforma[];
+
 }

@@ -1,0 +1,57 @@
+
+<mat-sidenav-container>
+ 
+    <mat-sidenav #sidenav mode="side">
+        <mat-toolbar>MENU</mat-toolbar>
+        <mat-nav-list>
+          <a mat-raised-button color="warn" [routerLink]="'/admin'">
+            <mat-icon>home</mat-icon>
+            Productos
+          </a>
+    
+        </mat-nav-list>
+        
+
+        <mat-nav-list>
+          <button mat-raised-button color="warn" href="./home">
+            <mat-icon>home</mat-icon>
+            Construcción           
+          </button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">
+            <mat-icon>home</mat-icon>
+            Veterinario
+          </button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">
+            <mat-icon>home</mat-icon>
+            Adopciones
+          </button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">
+            <mat-icon>home</mat-icon>
+            Consejos
+          </button>
+        </mat-nav-list>
+        <mat-nav-list>
+          <button mat-raised-button color="warn">
+            <mat-icon>home</mat-icon>
+            Insumos
+          </button>
+        </mat-nav-list>
+
+  
+
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>  
+      <app-header (toggleSideNav)="sidenav.toggle()"> </app-header>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

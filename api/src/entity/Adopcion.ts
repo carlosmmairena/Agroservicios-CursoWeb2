@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsBoolean, IsDateString, IsNotEmpty, MinDate, validate, ValidationError } from "class-validator";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Animal } from "./Animal";
 
@@ -10,32 +10,55 @@ export class Adopcion {
     id: number;
 
 
-    @Column()
-    idAnimal: number;
-
-
-    @Column()
-    @IsNotEmpty()
-    vacunas: boolean;
+    @IsBoolean()
+    @Column({ default: true })
+    vacunado: boolean;
 
     
-    @Column()
-    @IsNotEmpty()
+    @IsDateString()
+    @MinDate(new Date())
+    @Column({ nullable: false })
     fechaAdopcion: Date;
 
 
-    @Column()
     @IsNotEmpty()
+    @Column({ type: 'text' })
     descripcion: string;
 
 
-    @Column()
-    @IsNotEmpty()
-    estado: boolean;
+    @OneToOne(() => Animal, animal => animal.adopcion, { nullable: false, eager:true })
+    @JoinColumn({ name: 'idAnimal', referencedColumnName:'id' })
+    animal: Animal;
+
+    static async validate(adopcionToSave: Adopcion) : Promise<ValidationError[]> {
+
+        const validateOptions = { validationError: { target:false, value:false} };
+        const errors          = await validate(adopcionToSave, validateOptions);
+
+        return errors;
+    }
 
 
-    @OneToOne(type => Animal, animal => animal, { nullable: false, eager:true })
-    @JoinColumn({name: 'idAnimal', referencedColumnName:'id'})
-    animal: Animal;  
+    static checkData(data) : any {
+
+        let dataChecked = { hasErrors: false, errors: {}, message: "Nada para cambiar" };
+
+        if (!data.vacunado) {
+            dataChecked.errors['vacunado'] = 'vacunado es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        if (!data.fechaAdopcion) {
+            dataChecked.errors['fechaAdopcion'] = 'fechaAdopcion es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        if (!data.descripcion) {
+            dataChecked.errors['descripcion'] = 'descripcion es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        return dataChecked;
+    }
 
 }
