@@ -109,7 +109,7 @@ export class UsuarioController {
 
             usuarioToEdit.correo   = correo;
             //usuarioToEdit.estado        = true;
-            //usuarioToEdit.fechaRegistro = new Date();
+            usuarioToEdit.fechaRegistro = new Date();
             usuarioToEdit.password = password;
             usuarioToEdit.hashPassword();
     
