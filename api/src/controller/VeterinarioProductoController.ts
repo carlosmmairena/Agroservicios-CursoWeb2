@@ -7,11 +7,11 @@ import { Veterinario } from "../entity/Veterinario";
 export class VeterinarioProductoController {
 
     static allVeterinario = async (request: Request, response: Response) => {
-        const productRepository = getRepository(Producto);
-        const products = await productRepository.find({ relations: ['veterinario'] });
+        const productRepository = getRepository(Veterinario);
+        const products = await productRepository.find({ relations: ['producto'] });
         
         if (products.length < 1) {
-            return response.status(404).json({ message: 'No hay productos registrados.' });
+            return response.status(404).json({ message: 'No hay productos veterinarios registrados.' });
         }
 
         return response.status(200).json(products);
