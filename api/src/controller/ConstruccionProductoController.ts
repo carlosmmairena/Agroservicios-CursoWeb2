@@ -2,16 +2,16 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import { Producto } from "../entity/Producto";
 import { isNull, isUndefined } from "util";
-import { Veterinario } from "../entity/Veterinario";
+import { Construccion } from "../entity/Construccion";
 
-export class VeterinarioProductoController {
+export class ConstruccionProductoController {
 
-    static allVeterinario = async (request: Request, response: Response) => {
-        const productRepository = getRepository(Veterinario);
+    static allConstruccion = async (request: Request, response: Response) => {
+        const productRepository = getRepository(Construccion);
         const products = await productRepository.find({ relations: ['producto'] });
         
         if (products.length < 1) {
-            return response.status(404).json({ message: 'No hay productos veterinarios registrados.' });
+            return response.status(404).json({ message: 'No hay productos de construcción registrados.' });
         }
 
         return response.status(200).json(products);
@@ -19,18 +19,18 @@ export class VeterinarioProductoController {
 
 
     /**
-     * Guarda un producto de tipo Veterinario.
+     * Guarda un producto de tipo Construccion.
      * 
      * @param request 
      * @param response 
      * @returns status
      */
-    static saveVeterinario = async (request: Request, response: Response) => {
+    static saveConstruccion = async (request: Request, response: Response) => {
         try {
             const productRepository = getRepository(Producto);
-            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal } = request.body;
+            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, fragil } = request.body;
             
-            const dataValidated = Veterinario.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal });
+            const dataValidated = Construccion.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, fragil });
             
             if (dataValidated.hasErrors) {
                 return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
@@ -52,23 +52,23 @@ export class VeterinarioProductoController {
             productToSave.unidadMedida   = unidadMedida;
             productToSave.estado         = estado;
 
-            const veterinarioToSave = new Veterinario();
+            const construccionToSave = new Construccion();
 
-            veterinarioToSave.tipoAnimal = tipoAnimal;
-            veterinarioToSave.producto   = productToSave;
+            construccionToSave.fragil   = fragil;
+            construccionToSave.producto = productToSave;
 
-            const formatoDatosVeterinarioValidado = await Veterinario.validate(veterinarioToSave);
+            const formatoDatosConstruccionValidado = await Construccion.validate(construccionToSave);
 
-            if (formatoDatosVeterinarioValidado.length) {
-                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
+            if (formatoDatosConstruccionValidado.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosConstruccionValidado });
             }
 
             await productRepository.save(productToSave);
-            const veterinarioProductRepository = getRepository(Veterinario);
+            const construccionProductRepository = getRepository(Construccion);
 
-            const veterinarioProductSaved = await veterinarioProductRepository.save(veterinarioToSave);
+            const construccionProductSaved = await construccionProductRepository.save(construccionToSave);
             
-            return response.status(201).json({ message: 'Producto registrado', veterinario: veterinarioProductSaved });
+            return response.status(201).json({ message: 'Producto registrado', cosntruccion: construccionProductSaved });
 
         } catch (error) {
             return response.status(503).json({ message: "Algo ha fallado...", errors: error });
@@ -76,7 +76,13 @@ export class VeterinarioProductoController {
     }
 
 
-    static modifyVeterinario = async (request: Request, response: Response) => {
+    /**
+     * Modifica un producto de tipo Construccion
+     * @param request 
+     * @param response 
+     * @returns 
+     */
+    static modifyConstruccion = async (request: Request, response: Response) => {
         try {
             const { id } = request.params;
             
@@ -86,16 +92,16 @@ export class VeterinarioProductoController {
 
 
             const productRepository = getRepository(Producto);
-            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal } = request.body;
+            const { nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, fragil } = request.body;
             
-            const dataValidated = Veterinario.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, tipoAnimal });
+            const dataValidated = Construccion.checkData({ nombre, descripcion, marca, precioUnitario, stock, unidadMedida, estado, fragil });
             
             if (dataValidated.hasErrors) {
                 return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataValidated.errors });
             }
 
             // TODO: Debería haber un 'código de producto' para que el usuario pueda identificar de manera distinta un producto...
-            const productToEdit = await productRepository.findOne(id, { relations: ['veterinario'] });
+            const productToEdit = await productRepository.findOne(id, { relations: ['construccion'] });
             if(!productToEdit) {
                 return response.status(404).json({ message: `No se encuentra el producto con ID: ${id}`});
             }
@@ -114,20 +120,20 @@ export class VeterinarioProductoController {
             productToEdit.unidadMedida   = unidadMedida;
             productToEdit.estado         = estado;
 
-            const veterinarioToEdit = productToEdit.veterinario;
+            const insumoToEdit = productToEdit.construccion;
 
-            veterinarioToEdit.tipoAnimal = tipoAnimal;
-            veterinarioToEdit.producto   = productToEdit;
+            insumoToEdit.fragil   = fragil;
+            insumoToEdit.producto = productToEdit;
 
-            const formatoDatosVeterinarioValidado = await Veterinario.validate(veterinarioToEdit);
+            const formatoDatosConstruccionValidado = await Construccion.validate(insumoToEdit);
 
-            if (formatoDatosVeterinarioValidado.length) {
-                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosVeterinarioValidado });
+            if (formatoDatosConstruccionValidado.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: formatoDatosConstruccionValidado });
             }
 
-            const veterinarioProductRepository = getRepository(Veterinario);
+            const construccionProductRepository = getRepository(Construccion);
             await productRepository.save(productToEdit);
-            await veterinarioProductRepository.save(veterinarioToEdit);
+            await construccionProductRepository.save(insumoToEdit);
             
             return response.status(201).json({ message: 'Producto actualizado'});
 
