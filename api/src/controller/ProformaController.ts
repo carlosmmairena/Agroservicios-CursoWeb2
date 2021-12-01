@@ -9,16 +9,6 @@ import validators from "../utils/validators";
 export class ProformaController {
 
     /**
-     * Crea una lista de deseos para un cliente.
-     *
-     * @param request 
-     * @param response 
-     */
-    static createWishList = async (request: Request, response: Response) => {
-    }
-
-
-    /**
      * Muestra todas las proforma activas.
      * @param request 
      * @param response 
@@ -31,15 +21,6 @@ export class ProformaController {
         const proformas = await proformaRepository.find({ where: { estado: true } });
 
         return response.status(200).json({ proformas: proformas, message: 'Proformas encontradas.' });
-    }
-
-    /**
-     * Agrega una lista de detalles a una proforma o a la lista de deseos.
-     * 
-     * @param request 
-     * @param response 
-     */
-    static addDetalles = async (request: Request, response: Response) => {
     }
 
 
