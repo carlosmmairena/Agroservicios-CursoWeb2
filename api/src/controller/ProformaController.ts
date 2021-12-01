@@ -27,8 +27,8 @@ export class ProformaController {
         const { id } = request.params;
         const proformaRepository = getRepository(Proforma);
 
-        //const proformas = await proformaRepository.findAndCount({ where: { estado: true } });
-        const proformas = await proformaRepository.find();
+        //const proformas = await proformaRepository.find();
+        const proformas = await proformaRepository.find({ where: { estado: true } });
 
         return response.status(200).json({ proformas: proformas, message: 'Proformas encontradas.' });
     }
@@ -214,7 +214,40 @@ export class ProformaController {
     }
 
 
+    /**
+     * Elimina una proforma, recibe el ID de la proforma a eliminar.
+     * 
+     * @param request 
+     * @param response 
+     * @returns 
+     */
     static removeProforma = async (request: Request, response: Response) => {
+        try {
+            const { id } = request.params;
+
+            // Busca la proforma a eliminar
+            const proformaRepository = getRepository(Proforma);
+            const proformaToRemove   = await proformaRepository.findOne(id, { where: { estado: true } });
+
+            if (isNullOrUndefined(proformaToRemove)) {
+                return response.status(404).json({ message: `No se encuentra una proforma con ID ${id}.` });
+            }
+
+            proformaToRemove.estado = false;
+            await proformaRepository.save(proformaToRemove);
+
+            return response.status(201).json({ message: 'Proforma ha sido eliminada.', proforma: proformaToRemove });
+
+
+        } catch (error) {
+            const messages = {
+                message: 'Algo ha salido mal...',
+                error: error
+            };
+
+            console.error(error);
+            return response.status(503).json(messages);
+        }
     }
 
 }
