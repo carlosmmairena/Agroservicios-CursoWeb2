@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { isNullOrUndefined } from "util";
 import { Cliente } from "../entity/Cliente";
+import { DetalleProforma } from "../entity/DetalleProforma";
 import { Proforma } from "../entity/Proforma";
 import { Usuario } from "../entity/Usuario";
 import validators from "../utils/validators";
@@ -21,6 +22,27 @@ export class ProformaController {
         const proformas = await proformaRepository.find({ where: { estado: true } });
 
         return response.status(200).json({ proformas: proformas, message: 'Proformas encontradas.' });
+    }
+
+
+    /**
+     * Retorna la proforma y sus detalles
+     * 
+     * @param request 
+     * @param response 
+     * @returns 
+     */
+    static findProformaById = async (request: Request, response: Response) => {
+        const { id } = request.params;
+        const proformaRepository = getRepository(Proforma);
+
+        const proforma = await proformaRepository.findOne( id ,{ where: { estado: true }, relations: ['detallesProformas'] });
+        
+        if (isNullOrUndefined(proforma)) {
+            return response.status(404).json({ message: `No se encuetra una proforma con ID ${id}` });
+        }
+
+        return response.status(200).json({ proforma: proforma, message: 'Proformas encontradas.' });
     }
 
 

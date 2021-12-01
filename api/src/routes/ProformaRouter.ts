@@ -5,6 +5,7 @@ import { ProformaController } from "../controller/ProformaController";
 const PROFORMA_ROUTER = Router();
 
 PROFORMA_ROUTER.get('/',                 ProformaController.showProformas);
+PROFORMA_ROUTER.get('/:id',             ProformaController.findProformaById);
 PROFORMA_ROUTER.post('/',                ProformaController.saveProforma);
 PROFORMA_ROUTER.put('/:id',              ProformaController.modifyProforma);
 PROFORMA_ROUTER.put('/cancel/:id',       ProformaController.cancelProforma);

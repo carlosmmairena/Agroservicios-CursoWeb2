@@ -7,31 +7,6 @@ import { Proforma } from "../entity/Proforma";
 
 export class DetalleProformController {
 
-
-    /**
-     * Muesta detalles de una proforma.
-     * 
-     * @param request 
-     * @param response 
-     */
-    static showDetalles = async (request: Request, response: Response) => {
-        
-        try{
-            const { id } = request.params;
-
-            
-        } catch (error) {
-            const messages = {
-                message: 'Algo ha salido mal...',
-                error: error
-            };
-
-            console.error(error);
-            return response.status(503).json(messages);
-        }
-
-    }
-
     /**
      * Agrega una lista de detalles a una proforma o a la lista de deseos.
      * 
