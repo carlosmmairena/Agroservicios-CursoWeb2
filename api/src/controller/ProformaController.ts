@@ -3,6 +3,7 @@ import { getRepository } from "typeorm";
 import { isNullOrUndefined } from "util";
 import { Cliente } from "../entity/Cliente";
 import { Proforma } from "../entity/Proforma";
+import { Usuario } from "../entity/Usuario";
 import validators from "../utils/validators";
 
 export class ProformaController {
@@ -62,6 +63,7 @@ export class ProformaController {
             }
 
 
+            // Busca el cliente que solicita la proforma
             const cliente = await clienteRepository.findOne( { id: idCliente }, { select: ['correo', 'id', 'estado'] });
 
             if (isNullOrUndefined(cliente)) {
@@ -72,6 +74,8 @@ export class ProformaController {
                 return response.status(422).json({ message: `El cliente con ID ${idCliente}, ha sido desactivado.` });
             }
 
+
+            // Crea la proforma
             const proformaToSave               = new Proforma();
             proformaToSave.formaPago           = formaPago;
             proformaToSave.porcentajeDescuento = porcentajeDescuento;
@@ -103,12 +107,90 @@ export class ProformaController {
 
 
     /**
-     * Edita una proforma ya persistida.
+     * Edita una proforma ya persistida y agrega el usuario que está modificando.
      * 
      * @param request 
      * @param response 
      */
     static modifyProforma = async (request: Request, response: Response) => {
+
+        try {
+            const { id } = request.params;
+            const { idUsuario, idCliente, formaPago, porcentajeDescuento } = request.body;
+
+            if (isNullOrUndefined(idUsuario)) {
+                return response.status(404).json({ message: 'Debe proporcionar el ID del usuario que asignará a esta proforma.' });
+            }
+
+            const dataChecked = Proforma.checkData({ idCliente, formaPago, porcentajeDescuento });
+            
+            if (dataChecked.hasErrors) {
+                return response.status(422).json({ message: "Los siguientes campos están mal", errors: dataChecked.errors });
+            }
+
+
+            // Busca la proforma a modificar
+            const proformaRepository = getRepository(Proforma);
+            const proformaToEdit     = await proformaRepository.findOne(id);
+
+            if (isNullOrUndefined(proformaToEdit)) {
+                return response.status(404).json({ message: `No se encuentra una proforma con ID ${id}.` });
+            }
+            
+
+            // Busca el cliente que solicita la proforma
+            const clienteRepository = getRepository(Cliente);
+            const cliente = await clienteRepository.findOne( { id: idCliente }, { select: ['correo', 'id', 'estado'] });
+
+            if (isNullOrUndefined(cliente)) {
+                return response.status(404).json({ message: `No se encuentra cliente con ID ${idCliente}.` });
+            }
+
+            if (!cliente.estado) {
+                return response.status(422).json({ message: `El cliente con ID ${idCliente}, ha sido desactivado.` });
+            }
+
+
+            // Busca el usuario a asignar
+            const usuarioRepository = getRepository(Usuario);
+            const usuario           = await usuarioRepository.findOne( { id: idUsuario }, { select: ['correo', 'id', 'estado'] });
+
+            if (isNullOrUndefined(usuario)) {
+                return response.status(404).json({ message: `No se encuentra usuario con ID ${idUsuario}.` });
+            }
+
+            if (!usuario.estado) {
+                return response.status(422).json({ message: `El cliente con ID ${idCliente}, ha sido desactivado.` });
+            }
+
+
+            // Modifica los datos de la proforma
+            proformaToEdit.formaPago           = formaPago;
+            proformaToEdit.porcentajeDescuento = porcentajeDescuento;
+            proformaToEdit.fechaEmisiom        = new Date();
+            proformaToEdit.usuario             = usuario;
+            proformaToEdit.cliente             = cliente;
+
+            const entityValidated = await validators.validateEntity(proformaToEdit);
+
+            if (entityValidated.length) {
+                return response.status(422).json({ message: "Los datos no cumplen con el formato adecuado", details: entityValidated });
+            }
+
+            await proformaRepository.save(proformaToEdit);
+
+            return response.status(201).json({ message: 'Proforma ha sido modificada.', proforma: proformaToEdit });
+
+        } catch (error) {
+            const messages = {
+                message: 'Algo ha salido mal...',
+                error: error
+            };
+
+            console.error(error);
+            return response.status(503).json(messages);
+        }
+
     }
 
 

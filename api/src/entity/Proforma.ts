@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsNumber, Max, MaxLength, Min, MinDate } from "class-validator";
+import { IsBoolean, IsDate, IsNotEmpty, IsNumber, Max, MaxLength, Min, MinDate } from "class-validator";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { isNullOrUndefined } from "util";
 import { Cliente } from "./Cliente";
@@ -39,8 +39,13 @@ export class Proforma {
     formaPago: string;
 
 
+    @IsBoolean()
+    @Column({ default: true })
     estado: boolean;
 
+
+    @IsBoolean()
+    @Column({ default: false })
     canceled: boolean;
 
 
