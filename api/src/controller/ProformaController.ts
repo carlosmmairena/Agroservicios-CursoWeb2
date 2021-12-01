@@ -212,22 +212,38 @@ export class ProformaController {
 
 
     /**
-     * Confirma una proforma de un cliente.
-     * 
-     * @param request 
-     * @param response 
-     */
-    static confirmProforma = async (request: Request, response: Response) => {
-    }
-
-
-    /**
      * Cancela la proforma de un cliente.
      * 
      * @param request 
      * @param response 
      */
     static cancelProforma = async (request: Request, response: Response) => {
+        try {
+            const { id } = request.params;
+
+            // Busca la proforma a eliminar
+            const proformaRepository = getRepository(Proforma);
+            const proformaToCancel   = await proformaRepository.findOne(id, { where: { estado: true }, select: ['id', 'estado', 'fechaEmisiom', 'canceled', 'formaPago'], loadEagerRelations: false });
+
+            if (isNullOrUndefined(proformaToCancel)) {
+                return response.status(404).json({ message: `No se encuentra una proforma con ID ${id}.` });
+            }
+
+            proformaToCancel.canceled = true;
+            await proformaRepository.save(proformaToCancel);
+
+            return response.status(201).json({ message: 'Proforma ha sido cancelada.', proforma: proformaToCancel });
+
+
+        } catch (error) {
+            const messages = {
+                message: 'Algo ha salido mal...',
+                error: error
+            };
+
+            console.error(error);
+            return response.status(503).json(messages);
+        }
     }
 
 

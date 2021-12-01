@@ -5,11 +5,10 @@ import { ProformaController } from "../controller/ProformaController";
 const PROFORMA_ROUTER = Router();
 
 PROFORMA_ROUTER.get('/',                 ProformaController.showProformas);
-PROFORMA_ROUTER.get('/:id',             ProformaController.findProformaById);
+PROFORMA_ROUTER.get('/:id',              ProformaController.findProformaById);
 PROFORMA_ROUTER.post('/',                ProformaController.saveProforma);
 PROFORMA_ROUTER.put('/:id',              ProformaController.modifyProforma);
 PROFORMA_ROUTER.put('/cancel/:id',       ProformaController.cancelProforma);
-PROFORMA_ROUTER.put('/confirm/:id',      ProformaController.confirmProforma);
 PROFORMA_ROUTER.delete('/:id',           ProformaController.removeProforma);
 
 PROFORMA_ROUTER.put('/add-detalles/:id', DetalleProformController.addDetalles);
