@@ -1,50 +1,32 @@
-import { IsBoolean, IsDateString, IsEmail, IsInt, IsNotEmpty, Min, MinDate } from "class-validator";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { IsDate, IsEmail, IsNotEmpty, MinLength } from "class-validator";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import * as bcrypt from 'bcryptjs';
 import { Persona } from "./Persona";
-import { Proforma } from "./Proforma";
 
 
-@Entity("Clientes")
-export class Cliente {
+@Entity()
+@Unique(['correo'])
+export class Cliente{
 
+    //Atributos de una base de datos 
+ 
     @PrimaryGeneratedColumn()
     id: number;
-
-
-    @IsNotEmpty()
+ 
     @Column()
-    direccion: string;
-
-
-    @IsDateString()
-    @MinDate(new Date())
-    @Column({ type: 'date' })
-    fechaRegistro: Date;
-
-
     @IsEmail()
-    @IsNotEmpty()
-    @Column({ unique: true  })
-    correo: string; 
+    //@IsNotEmpty()
+    correo: string;
 
+    
 
-    @IsInt()
-    @IsNotEmpty()
     @Column()
-    telefono: boolean;
-
-
-    @IsBoolean()
-    @Column()
+    @IsNotEmpty()
     estado: boolean;
+   // static nombre: any;
 
 
-    @OneToOne(() => Persona, persona => persona.cliente, { eager: true })
-    @JoinColumn({  name: 'idPersona', referencedColumnName: 'id' })
-    persona: Persona;
-
-
-    @OneToMany(() => Proforma, proforma => proforma.cliente)
-    proformas: Proforma[];
-
+   @OneToOne(type => Persona)
+   @JoinColumn()
+   persona: Persona;
 }

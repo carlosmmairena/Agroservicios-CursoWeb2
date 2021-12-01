@@ -1,35 +1,39 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Usuario } from "../entity/Usuario";
-import * as jwt from "jsonwebtoken";
-import jwtConfig from "../config/jwtConfig";
+import { Usuario } from "../entity/Usuarios";
+import * as jwt from 'jsonwebtoken';
+import config from "../config/config";
+
 
 export class AuthController {
-
-    static login = async (request: Request, response: Response) => {
+    
+    static login = async (req:Request, res: Response)=>{ 
         
-        const { correo, password } = request.body;
+       const {correo, password} = req.body;
 
-        if (!(correo && password)) {
-            return response.status(422).json({message: 'Correo y contraseña son requeridas'});
-        }
+       if(!(correo && password)){
+           return res.status(400).json({mensaje:'Nombre o Contraseña requerida' });
+       }
 
-        try {
-            const userRepository = getRepository(Usuario);
-            const user = await userRepository.findOne({ correo: correo });
 
-            if (!user || !user.isCorrectPassword(password)) {
-                return response.status(401).json({message: 'Correo o contraseña incorrecta'})
-            }
-            
-            const token = jwt.sign({ userId: user.id, email: user.correo }, jwtConfig.jwtSecretKey, {expiresIn: '20m'});
-            
-            return response.status(200).json({message: 'Usuario autenticado', yourToken: token});
-            
-        } catch (error) {
+       const userRepo = getRepository(Usuario);
 
-            return response.status(503).json({message: 'Algo ha salido mal.', errors: error});
-        }
+       let usuario: Usuario;
+       try {
+           usuario =  await userRepo.findOneOrFail({where:{correo}});
+       } catch (error) {
+        return res.status(400).json({mensaje:'Correo o contraseña incorrectas' })
+       }
 
+       if(usuario.checkPassword(password)){
+           return res.status(400).json({mensaje: 'Correo o contraseña incorrectas!'});
+       }
+
+       const token = jwt.sign({userId: usuario.id, correo: usuario.correo }, config.jwtSecretKey, {expiresIn: '20m'});
+
+        res.status(200).json({mensaje:'ok!',token});
+  
     }
+
+
 }

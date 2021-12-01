@@ -1,12 +1,20 @@
+
 import { Router } from "express";
-import { checkJWT } from "../middleware/JwtMiddleware"; 
-import USER_ROUTER from "./UserRouter";
-import AUTH_ROUTER from "./AuthRouter";
+import auth from "./auth";
+import clientes from "./clientes";
+import usuarios from "./usuarios";
 
 
-const ROUTER = Router();
 
-ROUTER.use('/usuario', [checkJWT], USER_ROUTER);
-ROUTER.use('/auth', AUTH_ROUTER);
+const router= Router();
 
-export default ROUTER;
+router.use('/auth', auth)
+router.use('/usuario', usuarios)
+router.use('/cliente', clientes)
+
+
+
+
+
+
+export default router;
