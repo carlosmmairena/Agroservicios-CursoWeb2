@@ -4,8 +4,8 @@
    "port": 3306,
    "username": "root",
    "password": "JeffryV2019",
-   "database": "bdAgroservicios",
-   "synchronize": true,
+   "database": "bdagroservicios",
+   "synchronize": false,
    "logging": false,
    "entities": [
       "src/entity/**/*.ts"
