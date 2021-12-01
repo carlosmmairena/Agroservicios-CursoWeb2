@@ -84,6 +84,8 @@ export class ProformaController {
             proformaToSave.porcentajeDescuento = porcentajeDescuento;
             proformaToSave.fechaEmisiom        = new Date();
             proformaToSave.cliente             = cliente;
+            proformaToSave.estado              = true;
+            proformaToSave.canceled            = false;
 
             const entityValidated = await validators.validateEntity(proformaToSave);
 
@@ -119,11 +121,21 @@ export class ProformaController {
 
         try {
             const { id } = request.params;
-            const { idUsuario, idCliente, formaPago, porcentajeDescuento } = request.body;
+            const { idUsuario, idCliente, formaPago, porcentajeDescuento, estado, canceled } = request.body;
 
             if (isNullOrUndefined(idUsuario)) {
                 return response.status(404).json({ message: 'Debe proporcionar el ID del usuario que asignará a esta proforma.' });
             }
+
+
+            if (isNullOrUndefined(estado)) {
+                return response.status(422).json({ message: 'Debe proporcionar el campo estado.' });
+            }
+
+            if (isNullOrUndefined(canceled)) {
+                return response.status(422).json({ message: 'Debe proporcionar el campo canceled.' });
+            }
+
 
             const dataChecked = Proforma.checkData({ idCliente, formaPago, porcentajeDescuento });
             
@@ -173,6 +185,8 @@ export class ProformaController {
             proformaToEdit.fechaEmisiom        = new Date();
             proformaToEdit.usuario             = usuario;
             proformaToEdit.cliente             = cliente;
+            proformaToEdit.estado              = estado;
+            proformaToEdit.canceled            = canceled;
 
             const entityValidated = await validators.validateEntity(proformaToEdit);
 
