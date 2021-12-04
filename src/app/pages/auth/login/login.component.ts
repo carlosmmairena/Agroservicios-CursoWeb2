@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { LoginFormBase } from 'src/app/shared/Utils/loginForms';
+import { LoginFormsBase } from 'src/app/shared/Utils/loginForms';
 
 @Component({
   selector: 'app-login',
@@ -10,33 +10,30 @@ import { LoginFormBase } from 'src/app/shared/Utils/loginForms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public loginForm: LoginFormBase, private srvAuth: AuthService, private route: Router){}
-   
+  constructor(public loginForm: LoginFormsBase, 
+    private srvAuth: AuthService, 
+    private route: Router) { }
 
   ngOnInit(): void {
+    
   }
 
-  
   onLogin():void{
+
     if(this.loginForm.baseForm.invalid){
       return;
     }
+    const dataUser = this.loginForm.baseForm.value;
 
-
-    const dataUser= this.loginForm.baseForm.value;
-
+    
     this.srvAuth.onLogin(dataUser).subscribe((res)=>{
-
-      //Accedo a la ruta home
-      this.route.navigate(['home']);
-
-      //ver lo que devuelve el server
-        console.log(res);
-
+    
+     this.route.navigate(['home']);
     },(error)=>{
-
-      alert(error);
+      
+     alert(error);
     });
     
   }
+
 }

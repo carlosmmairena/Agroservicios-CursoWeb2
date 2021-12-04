@@ -1,10 +1,10 @@
 {
    "type": "mysql",
    "host": "localhost",
-   "port": 3306,
+   "port": 3308,
    "username": "root",
-   "password": "JeffryV2019",
-   "database": "bdagroservicios",
+   "password": "Liket1999!!",
+   "database": "bdAgroservicios",
    "synchronize": false,
    "logging": false,
    "entities": [
