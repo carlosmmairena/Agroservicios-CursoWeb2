@@ -47,8 +47,8 @@ export class AuthService  {
 
 
   saveStorage(user: UserResponse): void{
-    const {token}=user;
-    localStorage.setItem('userToken', token);
+    const { yourToken } = user;
+    localStorage.setItem('userToken', yourToken);
   }
 
   

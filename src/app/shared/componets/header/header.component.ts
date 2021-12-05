@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
     this.srvAuth.user$
     .subscribe((user)=>{
-      this.isLog= user?.token!=null;
+      this.isLog= user?.yourToken!=null;
     });
   }
 
