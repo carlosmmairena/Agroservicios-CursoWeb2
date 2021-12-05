@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-//import {takeUntil} from 'rxjs/operators'
 
 
 @Component({
@@ -10,16 +9,22 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isLog = false;
-  constructor(private srvAuth: AuthService) { }
+
+  constructor(private authService: AuthService) { }
 
   @Output() toggleSideNav= new EventEmitter<void>();
 
   ngOnInit(): void {
 
-    this.srvAuth.user$
-    .subscribe((user)=>{
-      this.isLog= user?.yourToken!=null;
+    this.authService.user$.subscribe((user)=>{
+      this.isLog = user?.yourToken != null;
     });
+
+    if(this.authService.isAuthenticated()) {
+      this.isLog = true;
+    } else {
+      this.isLog = false;
+    }
   }
 
   onToggleSideNav(): void{
@@ -27,6 +32,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onlogout(){
-    this.srvAuth.onlogout();
+    this.authService.onlogout();
   }
+
 }

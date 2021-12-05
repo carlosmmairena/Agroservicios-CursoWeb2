@@ -11,6 +11,7 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 import { InicioModule } from './componets/inicio/inicio/inicio.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginModule } from './pages/auth/login/login.module';
 
 
 
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     SidebarModule,
     InicioModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginModule
 
   ],
   providers: [],

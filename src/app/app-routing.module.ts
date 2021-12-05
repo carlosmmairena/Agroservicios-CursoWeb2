@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './pages/auth/admin/admin.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProformasComponent } from './pages/proformas/proformas.component';
+import { UsuariosComponent } from './pages/pages/usuarios/usuarios.component';
 
-const routes: Routes = [{
-  path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule) },{ 
-  path: 'admin', loadChildren: () => import('./pages/auth/admin/admin.module').then(m => m.AdminModule) },{
-  path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)},
-  { path: 'usuarios', loadChildren: () => import('./pages/pages/usuarios/usuarios.module').then(m => m.UsuariosModule) }];
+const routes: Routes = [
+  { path: '',          component: HomeComponent     },
+  { path: 'login',     component: LoginComponent     },
+  { path: 'admin',     component: AdminComponent     },
+  { path: 'home',      component: HomeComponent      },
+  { path: 'usuarios',  component: UsuariosComponent  },
+  { path: 'proformas', component: ProformasComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
