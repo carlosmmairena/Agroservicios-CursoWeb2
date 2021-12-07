@@ -32,7 +32,7 @@ export class ProformasService {
 
 
   save(proformaToSave: Proforma): Proforma {
-    
+    this.notifyNewChanges();
     return proformaToSave;
   }
 
