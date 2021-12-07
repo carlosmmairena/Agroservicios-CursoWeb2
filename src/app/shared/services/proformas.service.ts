@@ -26,6 +26,7 @@ export class ProformasService {
 
 
   getProformas$(): Observable<Proforma[]> {
+    this.notifyNewChanges();
     return this.proformas$.asObservable();
   }
 
