@@ -2,8 +2,12 @@
   <mat-card-title>Proformas</mat-card-title>
   <small>Menú de proformas.</small>
 
-  
   <mat-card-content>
+
+    <mat-card-content>
+      <button mat-flat-button color="primary" (click)="onClickCreateProforma()">Crear</button>
+    </mat-card-content>
+
     <mat-form-field appearance="outline" style="max-width: 180px;">
       <mat-label>Buscar:</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar proforma" #input>
@@ -29,6 +33,13 @@
       <ng-container matColumnDef="cliente">
         <th mat-header-cell *matHeaderCellDef> Cliente </th>
         <td mat-cell *matCellDef="let element"> {{ element.cliente.persona.nombre}} {{ element.cliente.persona.apellido1 }} {{ element.cliente.persona.apellido2 }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="opciones">
+        <th mat-header-cell *matHeaderCellDef> Opciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-flat-button color="warn" (click)="onClickModifyProforma(element)">Modificar</button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

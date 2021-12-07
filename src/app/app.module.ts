@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './pages/auth/login/login.module';
 import { ProformasComponent } from './pages/proformas/proformas.component';
+import { ModalProformaComponent } from './pages/proformas/modal-proforma/modal-proforma.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ProformasComponent } from './pages/proformas/proformas.component';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ProformasComponent
+    ProformasComponent,
+    ModalProformaComponent
     
   ],
   imports: [

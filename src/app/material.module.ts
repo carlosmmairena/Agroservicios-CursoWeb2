@@ -10,6 +10,8 @@ import { MatIconModule      } from "@angular/material/icon";
 import { MatMenuModule      } from "@angular/material/menu";
 import { MatTableModule     } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatDialogModule    } from "@angular/material/dialog";
+import { MatSelectModule    } from "@angular/material/select";
 
 const modules=[
     MatButtonModule, 
@@ -22,7 +24,9 @@ const modules=[
     MatIconModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule,
+    MatSelectModule
 ];
 
 @NgModule({

@@ -4,7 +4,7 @@ import { Router                          } from '@angular/router';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError                      } from 'rxjs/operators';
 import { environment                     } from 'src/environments/environment';
-import { Proforma, ProformasResponse } from '../models/proforma.interface';
+import { Proforma, ProformasResponse     } from '../models/proforma.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +31,10 @@ export class ProformasService {
   }
 
 
-  save(proformaToSave: Proforma): Proforma {
-    this.notifyNewChanges();
-    return proformaToSave;
+  save(proformaToSave: Proforma): Observable<any> {
+    const token = localStorage.getItem('userToken');
+    const header = new HttpHeaders().set('api_token', token!);
+    return this.http.post<any>(`${environment.URL}/proforma`, proformaToSave, { headers: header });
   }
 
   notifyNewChanges() {
