@@ -8,10 +8,8 @@ import { MatInputModule     } from "@angular/material/input";
 import { MatSidenavModule   } from "@angular/material/sidenav";
 import { MatIconModule      } from "@angular/material/icon";
 import { MatMenuModule      } from "@angular/material/menu";
-
-
-
-
+import { MatTableModule     } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 const modules=[
     MatButtonModule, 
@@ -22,7 +20,9 @@ const modules=[
     MatInputModule,
     MatSidenavModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule
 ];
 
 @NgModule({

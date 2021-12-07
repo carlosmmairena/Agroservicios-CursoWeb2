@@ -12,15 +12,15 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './pages/auth/login/login.module';
-
-
+import { ProformasComponent } from './pages/proformas/proformas.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ProformasComponent
     
   ],
   imports: [
