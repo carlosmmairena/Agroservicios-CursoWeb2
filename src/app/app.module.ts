@@ -12,6 +12,7 @@ import { InicioModule } from './componets/inicio/inicio/inicio.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './pages/auth/login/login.module';
+import { VeterinariosModule } from './pages/veterinarios/veterinarios.module';
 
 
 
@@ -32,7 +33,8 @@ import { LoginModule } from './pages/auth/login/login.module';
     InicioModule,
     ReactiveFormsModule,
     HttpClientModule,
-    LoginModule
+    LoginModule,
+    VeterinariosModule
 
   ],
   providers: [],

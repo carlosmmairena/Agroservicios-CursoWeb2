@@ -1,0 +1,61 @@
+
+
+<span class="mensaje">
+    {{mensaje}}
+</span>
+
+<mat-dialog-content>
+    <div class="modal">
+        <form [formGroup]="formVeterinarios.baseForm">
+            <mat-form-field class="full-width-imput" *ngIf="!isNew">
+                <input formControlName="id" matInput placeholder="Id Veterinario" readonly>
+            </mat-form-field>
+        <!--*ngIf="!isNew"-->
+            <mat-form-field class="full-width-imput">
+                <input formControlName="nombre" matInput placeholder="Nombre" required>
+            </mat-form-field>
+        
+            <mat-form-field class="full-width-imput">
+                <input formControlName="descripcion" matInput placeholder="Descripcion" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-imput">
+                <input  formControlName="precioUnitario" matInput placeholder="Precio Unitario" type="number" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-imput">
+                <input formControlName="marca" matInput placeholder="Marca" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-imput">
+                <input formControlName="stock" matInput placeholder="Stock" type="number" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-imput">
+                <input formControlName="unidadMedida" matInput placeholder="Unidad Medida" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Estado:</mat-label>
+                <mat-select formControlName="estado" [required]="true">
+                <mat-option [value]="true">Activo</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+                </mat-select>
+                </mat-form-field>
+
+            <mat-form-field class="full-width-imput">
+                <input formControlName="tipoAnimal" matInput placeholder="Tipo Animal" required>
+            </mat-form-field>
+
+            
+        
+        </form>
+        </div>    
+</mat-dialog-content>
+
+<mat-dialog-actions>
+<div>
+    <button mat-button (click)="guardar()">Aceptar</button>
+    <button mat-button mat-dialog-close="">Cancelar</button>
+</div>
+</mat-dialog-actions>
