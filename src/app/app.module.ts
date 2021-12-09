@@ -12,6 +12,7 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './pages/auth/login/login.module';
+import { ConstruccionModule } from './pages/construccion/construccion.module';
 
 
 
@@ -32,7 +33,7 @@ import { LoginModule } from './pages/auth/login/login.module';
     ReactiveFormsModule,
     HttpClientModule,
     LoginModule,
-
+    ConstruccionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
