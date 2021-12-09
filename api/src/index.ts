@@ -25,5 +25,7 @@ createConnection().then(async connection => {
     app.listen(PORT);
 
     console.log(`The server has started on port ${PORT}. Open http://localhost:${PORT}/api/login`);
+    
+    app.use(express.static('uploads'));
 
 }).catch(error => console.log(error));
