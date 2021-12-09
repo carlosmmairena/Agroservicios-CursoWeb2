@@ -17,6 +17,8 @@ export class AnimalService {
 
  
   getAll():Observable<Animales[]>{
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token',token)!;
     return this.http.get<Animales[]>(`${environment.URL}/animal`).pipe(catchError(this.handleError));
   }
 
@@ -37,8 +39,7 @@ export class AnimalService {
 
   delete(id:number):Observable<any>{
     var token = localStorage.getItem('userToken')!;
-    const header = new HttpHeaders()
-    .set('api_token',token)
+    const header = new HttpHeaders().set('api_token',token)
     return this.http.delete<any>(`${environment.URL}/animal/${id}`,{headers: header}).pipe(catchError(this.handleError));
   }
 

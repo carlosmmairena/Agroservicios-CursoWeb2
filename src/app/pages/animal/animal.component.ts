@@ -56,9 +56,9 @@ export class AnimalComponent implements OnInit {
 
   }
 
-  delete(id: number):void{
-    this.srvAnimal.delete(id).subscribe((values)=>{
-     alert("Usuario eliminado");
+  delete(id:number):void{
+    this.srvAnimal.delete(id).subscribe(()=>{
+     alert("Animal eliminado");
      this.refreshList();
 
     }, ( error)=>{

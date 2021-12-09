@@ -2,6 +2,7 @@ import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min } from "class-validator
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Raza } from "./Raza";
 import { Adopcion } from "./Adopcion";
+import { isNullOrUndefined } from "util";
 
 
 @Entity("Animales")
@@ -42,6 +43,23 @@ export class Animal {
     estado: boolean;  
 
 
+    static checkData(data) : any {
+
+        const dataValidated = Animal.checkData(data);
+
+        let dataChecked = { hasErrors: false, errors: {}, message: "Nada para cambiar" };
+        
+        if (dataValidated.hasErrors) {
+            dataChecked.errors = dataValidated.errors;
+        }
+
+        if (isNullOrUndefined(data.fragil)) {
+            dataChecked.errors['fragil'] = 'fragil es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        return dataChecked;
+    }
 
 
    @OneToOne(() => Adopcion, adopcion => adopcion.animal)

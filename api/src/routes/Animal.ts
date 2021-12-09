@@ -7,11 +7,11 @@ const router= Router();
 //obtiene todos
 router.get('/',AnimalController.getAll);
 //crear 
-router.post('/', AnimalController.new);
+router.post('/',AnimalController.new);
 //modifica
-router.patch('/:id',);
+router.patch('/:id');
 //elimina
-router.delete('/:id',[checkJWT],AnimalController.delete);
+router.delete('/:id',AnimalController.delete);
 
 
 

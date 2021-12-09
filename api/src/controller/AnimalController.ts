@@ -1,6 +1,7 @@
 import { validate } from "class-validator";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
+import { isNull, isUndefined } from "util";
 import { Animal } from "../entity/Animal";
 
 
@@ -39,19 +40,19 @@ static new = async (req:Request, res:Response)=>{
       let newAnimal =  new Animal;
 
     if(!tipo){
-      res.status(404).json({mensaje:'Falta el Tipo!'});
+     return res.status(404).json({mensaje:'Falta el Tipo!'});
     }
     if(!color){
-      res.status(404).json({mensaje:'Falta el color!'});
+     return res.status(404).json({mensaje:'Falta el Color!'});
     }
     if(!peso){
-      res.status(404).json({mensaje:'Falta el Peso!'});
+     return res.status(404).json({mensaje:'Falta el Peso!'});
     }
     if(!raza){
-      res.status(404).json({mensaje:'Falta la raza!'});
+     return res.status(404).json({mensaje:'Falta la raza!'});
     }  
     if(!Descripcion){
-      res.status(404).json({mensaje:'Falta el Descripcion!'});
+      return res.status(404).json({mensaje:'Falta el Descripcion!'});
     }
     
     newAnimal.tipo = tipo;
@@ -74,7 +75,7 @@ static new = async (req:Request, res:Response)=>{
     }catch (error){
       return res.status(409).json({mensaje: 'El Animal ya existe'});
     }
-      res.status(201).json({mensaje: 'Animal Creado'});
+     return res.status(201).json({mensaje: 'Animal Creado'});
 
   }
 
@@ -85,18 +86,22 @@ static new = async (req:Request, res:Response)=>{
    let animal;
 
    try{
-     animal = await AnimalRepo.findOneOrFail();
+     animal = await AnimalRepo.findOneOrFail(id);
    }catch(error) {
-     res.status(404).json({mensaje: 'El animal no se encuentra'});
+     return res.status(404).json({mensaje: 'El animal no se encuentra'});
    }
-   animal.estado=false;
+    animal.estado=false;
 
    try{
      await AnimalRepo.save(animal)
    }catch (error) {
      return res.status(404).json({mensaje: 'Error al eliminar'});
    }
-   res.status(201).send('Animal Eliminado');
+     return res.status(201).json({mensaje: 'Animal Eliminado'});
   }
+
+  
+
+
    
 }
