@@ -28,6 +28,9 @@ export class Animal {
     @Column({  nullable: false })
     peso: number;
 
+    @IsNotEmpty()
+    @Column({ type: 'text' })
+    raza: string;
 
     @IsNotEmpty()
     @Column({ type: 'text' })
@@ -39,9 +42,6 @@ export class Animal {
     estado: boolean;  
 
 
-   @ManyToOne(() => Raza, raza => raza.animales, { nullable: false, eager:true })
-   @JoinColumn({ name: 'idRaza', referencedColumnName: 'id' })
-   raza: Raza;
 
 
    @OneToOne(() => Adopcion, adopcion => adopcion.animal)

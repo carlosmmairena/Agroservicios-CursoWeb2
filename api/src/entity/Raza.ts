@@ -21,7 +21,5 @@ export class Raza {
     estado: boolean;
 
 
-    @OneToMany(() => Animal, animal => animal.raza)
-    animales: Animal[];
 
 }
