@@ -11,12 +11,11 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './pages/auth/login/login.component';
 import { AnimalComponent } from './pages/animal/animal.component';
-import { LoginModule } from './pages/auth/login/login.module';
-import { AnimalModule } from './pages/animal/animal.module';
-
-
+import { ProformasComponent } from './pages/proformas/proformas.component';
+import { ModalProformaComponent } from './pages/proformas/modal-proforma/modal-proforma.component';
+import { CrearanimalComponent } from './pages/animal/crearanimal/crearanimal.component';
+import { LoginComponent } from './pages/auth/login/login.component';
 
 
 @NgModule({
@@ -24,7 +23,11 @@ import { AnimalModule } from './pages/animal/animal.module';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    
+    ProformasComponent,
+    ModalProformaComponent,
+    AnimalComponent,
+    CrearanimalComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +36,7 @@ import { AnimalModule } from './pages/animal/animal.module';
     MaterialModule,
     SidebarModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    LoginModule,
-    AnimalModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

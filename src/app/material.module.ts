@@ -32,7 +32,8 @@ const modules=[
     MatTableModule,
     MatDialogModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSortModule
 ];
 
 @NgModule({
