@@ -1,12 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AnimalComponent } from './pages/animal/animal.component';
+import { AdminComponent } from './pages/auth/admin/admin.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProformasComponent } from './pages/proformas/proformas.component';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
-const routes: Routes = [{ path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule) },
- { path: 'admin', loadChildren: () => import('./pages/auth/admin/admin.module').then(m => m.AdminModule) },
- { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) }];
+const routes: Routes = [
+  { path: '',          component: HomeComponent      },
+  { path: 'login',     component: LoginComponent     },
+  { path: 'admin',     component: AdminComponent     },
+  { path: 'home',      component: HomeComponent      },
+  { path: 'usuarios',  component: UsuariosComponent  },
+  { path: 'proformas', component: ProformasComponent },
+  { path: 'animal',    component: AnimalComponent    },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

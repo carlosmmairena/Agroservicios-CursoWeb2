@@ -1,0 +1,51 @@
+<mat-card>
+    <form [formGroup]="formProforma.baseForm" (submit)="onSubmit()">
+        <mat-form-field appearance="fill" *ngIf="!dataProforma.isNew">
+            <mat-label>ID:</mat-label>
+            <input formControlName="id" matInput placeholder="id" [readonly]="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Descuento %:</mat-label>
+            <input formControlName="porcentajeDescuento" matInput placeholder="%" type="number" [required]="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Forma de pago:</mat-label>
+            <mat-select formControlName="formaPago" [required]="true">
+                <mat-option [value]="'Efectivo'">Efectivo</mat-option>
+                <mat-option [value]="'Trasnferencia'">Transferencia</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cliente:</mat-label>
+
+            <mat-select formControlName="idCliente" [required]="true">
+                <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cancelar:</mat-label>
+
+            <mat-select formControlName="canceled" [required]="true">
+                <mat-option [value]="true">Si</mat-option>
+                <mat-option [value]="false">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" *ngIf="!dataProforma.isNew">
+            <mat-label>Estado Factura:</mat-label>
+
+            <mat-select formControlName="estado">
+                <mat-option [value]="true">Activa</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button type="submit" mat-flat-button color="primary" *ngIf="!formProforma.baseForm.invalid">Guardar</button>
+        <button mat-dialog-close mat-flat-button color="warn">Cerrar</button>
+
+    </form>
+</mat-card>

@@ -5,21 +5,22 @@
             AgroServicios Login
         </mat-card-header>
 
+
+
         <mat-card-content>
-            <form [formGroup]= "loginForm.baseForm" (ngSubmit)="onLogin()">
+            <form [formGroup]="loginForm.baseForm" (ngSubmit)="onLogin()">
                 <mat-form-field class="full-width-input">
-                    <input type="text" matInput placeholder="Correo" required formControlName="correo">
+                    <input type="text" matInput placeholder="Usuario/Correo" required formControlName="correo">
                 </mat-form-field>
     
                 <mat-form-field class="full-width-input">
                     <input type="password" matInput placeholder="Contraseña" required formControlName="password">
                 </mat-form-field>
     
-                <button 
-                type="submit" mat-raised-button color="warn" 
+                <button type="submit" 
+                mat-raised-button color="warn"
+                [disabled]="loginForm.baseForm.invalid">Login</button>
                 
-                [disabled]="loginForm.baseForm.invalid">login</button>
-            
             </form>
             
         </mat-card-content>

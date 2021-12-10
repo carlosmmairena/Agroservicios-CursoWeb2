@@ -24,7 +24,7 @@ export class AuthController {
             
             const token = jwt.sign({ userId: user.id, email: user.correo }, jwtConfig.jwtSecretKey, {expiresIn: '20m'});
             
-            return response.status(200).json({message: 'Usuario autenticado', yourToken: token});
+            return response.status(200).json({message: 'Usuario autenticado', yourToken: token, id: user.id });
             
         } catch (error) {
 

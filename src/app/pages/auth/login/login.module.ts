@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
+
 @NgModule({
   declarations: [
     LoginComponent
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginRoutingModule,
     MaterialModule,
     ReactiveFormsModule
+
   ]
 })
 export class LoginModule { }

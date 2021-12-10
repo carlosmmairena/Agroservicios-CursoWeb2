@@ -1,5 +1,6 @@
-import { IsDateString, IsNotEmpty, IsNumber, Max, MaxLength, Min, MinDate } from "class-validator";
+import { IsBoolean, IsDate, IsNotEmpty, IsNumber, Max, MaxLength, Min, MinDate } from "class-validator";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { isNullOrUndefined } from "util";
 import { Cliente } from "./Cliente";
 import { DetalleProforma } from "./DetalleProforma";
 import { Usuario } from "./Usuario";
@@ -17,7 +18,7 @@ export class Proforma {
     usuario: Usuario;
 
 
-    @ManyToOne(() => Cliente, cliente => cliente.proformas)
+    @ManyToOne(() => Cliente, cliente => cliente.proformas, { eager: true })
     @JoinColumn({ name: "idCliente", referencedColumnName: "id" })
     cliente: Cliente;
 
@@ -27,7 +28,7 @@ export class Proforma {
 
 
     @MinDate(new Date())
-    @IsDateString()
+    @IsDate()
     @Column({ type: 'date' })
     fechaEmisiom: Date;
 
@@ -38,10 +39,42 @@ export class Proforma {
     formaPago: string;
 
 
+    @IsBoolean()
+    @Column({ default: true })
+    estado: boolean;
+
+
+    @IsBoolean()
+    @Column({ default: false })
+    canceled: boolean;
+
+
     @Min(0)
     @Max(100)
     @IsNumber()
     @Column({ default: 0 })
     porcentajeDescuento: number;
+
+    static checkData(data) : any {
+
+        let dataChecked = { hasErrors: false, errors: {}, message: "Nada para cambiar" };
+
+        if (!data.idCliente) {
+            dataChecked.errors['idCliente'] = 'idCliente es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        if (!data.formaPago) {
+            dataChecked.errors['formaPago'] = 'formaPago es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        if (isNullOrUndefined(data.porcentajeDescuento)) {
+            dataChecked.errors['porcentajeDescuento'] = 'porcentajeDescuento es requerido';
+            dataChecked.hasErrors = true;
+        }
+
+        return dataChecked;
+    }
 
 }
