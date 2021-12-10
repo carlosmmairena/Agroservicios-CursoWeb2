@@ -8,7 +8,12 @@ import { MatInputModule     } from "@angular/material/input";
 import { MatSidenavModule   } from "@angular/material/sidenav";
 import { MatIconModule      } from "@angular/material/icon";
 import { MatMenuModule      } from "@angular/material/menu";
-
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableModule     } from "@angular/material/table";
+import { MatDialogModule    } from "@angular/material/dialog";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
 
 
 
@@ -22,7 +27,12 @@ const modules=[
     MatInputModule,
     MatSidenavModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatOptionModule
 ];
 
 @NgModule({

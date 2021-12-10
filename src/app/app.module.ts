@@ -11,7 +11,10 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { AnimalComponent } from './pages/animal/animal.component';
 import { LoginModule } from './pages/auth/login/login.module';
+import { AnimalModule } from './pages/animal/animal.module';
 
 
 
@@ -20,7 +23,7 @@ import { LoginModule } from './pages/auth/login/login.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
     
   ],
   imports: [
@@ -32,7 +35,7 @@ import { LoginModule } from './pages/auth/login/login.module';
     ReactiveFormsModule,
     HttpClientModule,
     LoginModule,
-
+    AnimalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
