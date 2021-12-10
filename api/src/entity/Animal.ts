@@ -1,6 +1,5 @@
 import { IsBoolean, IsNotEmpty, IsNumber, MaxLength, Min } from "class-validator";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Raza } from "./Raza";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Adopcion } from "./Adopcion";
 import { isNullOrUndefined } from "util";
 
