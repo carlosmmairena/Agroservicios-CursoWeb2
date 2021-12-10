@@ -13,10 +13,11 @@ export class ConstruccionService {
  
   constructor(private http: HttpClient , private route: Router) { }
 
-  getAll():Observable<Construccion[]>{
-    return this.http.get<Construccion[]>(`${environment.URL}/construccion`).pipe(catchError(this.handleError))
-
+  getAll():Observable<Construccion[]> {
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token', token);
     
+    return this.http.get<Construccion[]>(`${environment.URL}/producto/construcciones`, { headers: header }).pipe(catchError(this.handleError));
   }
   handleError(error: any): Observable<never>{
 
@@ -27,31 +28,28 @@ export class ConstruccionService {
       mensajeError=`Error: ${error.error.mensaje}`
     }
 
-  return throwError(mensajeError);
+    return throwError(mensajeError);
   }
 
   delete(id:number):Observable<{}>{
-    var token = localStorage.getItem('construToken')!;
-    const header = new HttpHeaders()
-    .set('api_token', token)
-    return this.http.delete<any>(`${environment.URL}/construccion/${id}`,{headers:header}).pipe(catchError(this.handleError));
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token', token);
 
+    return this.http.delete<any>(`${environment.URL}/construccion/${id}`,{headers:header}).pipe(catchError(this.handleError));
   }
 
   save(constru: Construccion):Observable<any>{
-    var token = localStorage.getItem('construToken')!;
-    const header = new HttpHeaders()
-    .set('api_token', token)
-    return this.http.post<any>(`${environment.URL}/construccion/`,constru,{headers:header}).pipe(catchError(this.handleError));
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token', token);
 
+    return this.http.post<any>(`${environment.URL}/construccion/`,constru, { headers: header }).pipe(catchError(this.handleError));
   }
 
   update(constru: Construccion):Observable<any>{
-    var token = localStorage.getItem('construToken')!;
-    const header = new HttpHeaders()
-    .set('api_token', token)
-    return this.http.patch<any>(`${environment.URL}/construccion/${constru.id}`,constru,{headers:header}).pipe(catchError(this.handleError));
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token', token);
 
+    return this.http.patch<any>(`${environment.URL}/construccion/${constru.id}`,constru, { headers: header }).pipe(catchError(this.handleError));
   }
 
 }
