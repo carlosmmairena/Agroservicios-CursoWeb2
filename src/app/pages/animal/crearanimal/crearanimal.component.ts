@@ -16,7 +16,7 @@ export class CrearanimalComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA)public data:any,
   public formCrear: CrearAnimalesFormGroup,
-  private userSrv: AnimalService,
+  private animalService: AnimalService,
   public dialogRef: MatDialogRef<CrearanimalComponent>
 
   ) { }
@@ -39,19 +39,21 @@ export class CrearanimalComponent implements OnInit {
     if(this.formCrear.baseForm.invalid)
     return;
 
-    const user =  this.formCrear.baseForm.value;
+    const animal =  this.formCrear.baseForm.value;
 
     if (this.isNew) {
-      this.userSrv.save(user).subscribe((datos)=>{
+      this.animalService.save(animal).subscribe((datos)=>{
         alert("Se Guardo con exito");
         this.dialogRef.close();
+        this.formCrear.baseForm.reset();
       },(err)=>{
         alert(err);
       });
     }else{
-      this.userSrv.save(user).subscribe((datos)=>{
+      this.animalService.update(animal).subscribe((datos)=>{
         alert("Se Modifico con exito");
         this.dialogRef.close();
+        this.formCrear.baseForm.reset();
       },(err)=>{
         alert(err);
       });

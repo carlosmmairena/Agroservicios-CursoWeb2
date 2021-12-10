@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AnimalService } from 'src/app/shared/services/animal.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Animales } from 'src/app/shared/componets/models/animal.interface';
+import { Animales } from 'src/app/shared/models/animal.interface';
 import { CrearanimalComponent } from './crearanimal/crearanimal.component';
 
 @Component({

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Animales } from '../componets/models/animal.interface';
+import { Animales } from '../models/animal.interface';
 
 
 @Injectable({
@@ -19,27 +19,29 @@ export class AnimalService {
   getAll():Observable<Animales[]>{
     const token = localStorage.getItem('userToken')!;
     const header = new HttpHeaders().set('api_token',token)!;
-    return this.http.get<Animales[]>(`${environment.URL}/animal`).pipe(catchError(this.handleError));
+
+    return this.http.get<Animales[]>(`${environment.URL}/animal`, { headers: header }).pipe(catchError(this.handleError));
   }
 
-  save(user : Animales): Observable<any>{
+  save(animal : Animales): Observable<any>{
     const token = localStorage.getItem('userToken');
     const header = new HttpHeaders().set('api_token', token!);
-    return this.http.post<Animales[]>(`${environment.URL}/animal`,user).pipe()
+
+    return this.http.post<Animales[]>(`${environment.URL}/animal`,animal, { headers: header }).pipe()
   }
 
-  update(user : Animales ):Observable<any>{
-    var token = localStorage.getItem('userToken')!;
-    const header = new HttpHeaders()
-    .set('api_token',token)
-    return this.http.patch<any>(`${environment.URL}/animal/${user.id}`,{headers: header}).
-    pipe(catchError(this.handleError));
+  update(animal : Animales ):Observable<any>{
+    const token = localStorage.getItem('userToken')!;
+    const header = new HttpHeaders().set('api_token',token);
+
+    return this.http.patch<any>(`${environment.URL}/animal/${animal.id}`, animal, {headers: header}).pipe(catchError(this.handleError));
   }
 
 
   delete(id:number):Observable<any>{
     var token = localStorage.getItem('userToken')!;
-    const header = new HttpHeaders().set('api_token',token)
+    const header = new HttpHeaders().set('api_token',token);
+    
     return this.http.delete<any>(`${environment.URL}/animal/${id}`,{headers: header}).pipe(catchError(this.handleError));
   }
 
@@ -53,7 +55,5 @@ export class AnimalService {
    
     return throwError(mensajeError);
   }
-
-
 
 }
