@@ -8,10 +8,15 @@ import { MatInputModule     } from "@angular/material/input";
 import { MatSidenavModule   } from "@angular/material/sidenav";
 import { MatIconModule      } from "@angular/material/icon";
 import { MatMenuModule      } from "@angular/material/menu";
-import { MatTableModule     } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableModule     } from "@angular/material/table";
 import { MatDialogModule    } from "@angular/material/dialog";
-import { MatSelectModule    } from "@angular/material/select";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+
+
+
 
 const modules=[
     MatButtonModule, 
@@ -23,10 +28,12 @@ const modules=[
     MatSidenavModule,
     MatIconModule,
     MatMenuModule,
-    MatTableModule,
     MatPaginatorModule,
+    MatTableModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatOptionModule,
+    MatSortModule
 ];
 
 @NgModule({
