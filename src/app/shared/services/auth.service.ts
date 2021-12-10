@@ -2,9 +2,9 @@ import { HttpClient         } from '@angular/common/http';
 import { Injectable         } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { environment        } from 'src/environments/environment';
-import { User, UserResponse } from '../componets/models/user.interface';
 import { map, catchError    } from 'rxjs/operators';
 import { Router             } from '@angular/router';
+import { User, UserResponse } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,9 @@ export class AuthService  {
 
 
   saveStorage(user: UserResponse): void {
-    const { yourToken } = user;
+    const { yourToken, id } = user;
     localStorage.setItem('userToken', yourToken);
+    localStorage.setItem('idUsuario', id.toString());
   }
 
   
