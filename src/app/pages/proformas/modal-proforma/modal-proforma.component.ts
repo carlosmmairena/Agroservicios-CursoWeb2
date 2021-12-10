@@ -86,6 +86,7 @@ export class ModalProformaComponent implements OnInit {
       this.proformaService.notifyNewChanges();
       alert("Proforma modificada");
       console.log(values);
+      this.dialogRef.close();
       
     }, (error) => {
       console.error(error.error.message);
@@ -108,6 +109,7 @@ export class ModalProformaComponent implements OnInit {
       this.proformaService.notifyNewChanges();
       alert("Proforma guardada")
       console.log(values);
+      this.dialogRef.close();
       
     }, (error) => {
       console.error(error.error.message);
