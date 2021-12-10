@@ -34,9 +34,18 @@
                 <mat-option [value]="false">No</mat-option>
             </mat-select>
         </mat-form-field>
+        
+        <mat-form-field appearance="fill" *ngIf="!dataProforma.isNew">
+            <mat-label>Estado Factura:</mat-label>
+
+            <mat-select formControlName="estado">
+                <mat-option [value]="true">Activa</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
 
         <button type="submit" mat-flat-button color="primary" *ngIf="!formProforma.baseForm.invalid">Guardar</button>
-        <button mat-dialog-close mat-flat-button color="danger">Cerrar</button>
+        <button mat-dialog-close mat-flat-button color="warn">Cerrar</button>
 
     </form>
 </mat-card>

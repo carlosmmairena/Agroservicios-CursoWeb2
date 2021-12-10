@@ -27,7 +27,7 @@
 
       <ng-container matColumnDef="cancelada">
         <th mat-header-cell *matHeaderCellDef> Cancelada </th>
-        <td mat-cell *matCellDef="let element"> {{element.canceled}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.canceled? 'SI': 'NO' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="cliente">

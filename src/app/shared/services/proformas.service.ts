@@ -37,6 +37,12 @@ export class ProformasService {
     return this.http.post<any>(`${environment.URL}/proforma`, proformaToSave, { headers: header });
   }
 
+  edit(proformaToEdit: Proforma): Observable<any> {
+    const token = localStorage.getItem('userToken');
+    const header = new HttpHeaders().set('api_token', token!);
+    return this.http.put<any>(`${environment.URL}/proforma/${proformaToEdit.id}`, proformaToEdit, { headers: header });
+  }
+
   notifyNewChanges() {
     const token = localStorage.getItem('userToken')!;
     const header = new HttpHeaders().set('api_token', token);

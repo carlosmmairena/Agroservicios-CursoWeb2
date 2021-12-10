@@ -15,4 +15,5 @@ export interface Proforma {
     canceled:            boolean;
     porcentajeDescuento: number;
     cliente:             Object;
+    idUsuario:           number;
 }

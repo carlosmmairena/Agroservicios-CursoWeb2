@@ -11,7 +11,7 @@ import { ProformaFormGroup } from 'src/app/shared/Utils/proformaForm';
 })
 export class ModalProformaComponent implements OnInit {
 
-  public clientes = [ { nombre: 'Carlos', id: 1 }, { nombre: 'Elena', id: 1 } ]
+  public clientes = [ { nombre: 'Carlos', id: 2 }, { nombre: 'Elena', id: 1 } ]
 
   constructor(
     private proformaService: ProformasService,
@@ -58,10 +58,50 @@ export class ModalProformaComponent implements OnInit {
     }
 
     const datos = this.formProforma.baseForm.value;
-    const proformaToSave: Proforma = datos;
+    const proforma: Proforma = datos;
 
 
     // Modificar o editar
+    if (this.dataProforma.isNew) {
+      this.registrar(proforma);
+    } else {
+      this.editar(proforma);
+    }
+
+    this.formProforma.baseForm.reset();
+    return true;
+  }
+
+
+  /**
+   * Modifica una proforma
+   * 
+   * @param proformaToEdit 
+   */
+  private editar(proformaToEdit: Proforma) {
+    proformaToEdit.idUsuario = parseInt(localStorage.getItem('idUsuario')!);
+
+    this.proformaService.edit(proformaToEdit).subscribe( (values) => {
+      
+      this.proformaService.notifyNewChanges();
+      alert("Proforma modificada");
+      console.log(values);
+      
+    }, (error) => {
+      console.error(error.error.message);
+      alert(
+        `${error.error.message} 
+        Revise los campos`
+      )
+    });
+  }
+
+
+  /**
+   * 
+   * @param proformaToSave 
+   */
+  private registrar(proformaToSave: Proforma) {
     this.proformaService.save(proformaToSave).subscribe( (values) => {
 
       // Llama la función creada en el servicio para reportar cambios de los videos.
@@ -76,9 +116,6 @@ export class ModalProformaComponent implements OnInit {
         Revise los campos`
       )
     });
-
-    this.formProforma.baseForm.reset();
-    return true;
   }
 
 }

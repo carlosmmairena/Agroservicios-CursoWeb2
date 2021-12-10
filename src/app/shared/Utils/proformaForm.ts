@@ -6,11 +6,12 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class ProformaFormGroup {
 
     public baseForm = this.fb.group({
-        id:                  [''],
+        id:                  [''  ],
         idCliente:           ['', [ Validators.required,  Validators.minLength(2), Validators.min(1)] ],
         formaPago:           ['', [ Validators.required ]                                             ],
         porcentajeDescuento: ['', [ Validators.required, Validators.min(0), Validators.max(100)]      ],
-        canceled:            ['', [ Validators.required ]                                             ]
+        canceled:            ['', [ Validators.required ]                                             ],
+        estado:              ['', ]
     });
 
 
