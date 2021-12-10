@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Construccion } from 'src/app/shared/models/construccion.interface';
 import { ConstruccionService } from 'src/app/shared/services/construccion.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
 import {MatDialog } from '@angular/material/dialog'
 import { ModalConstruComponent } from './modal-constru/modal-constru.component';
 

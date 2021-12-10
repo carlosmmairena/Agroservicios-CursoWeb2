@@ -16,6 +16,8 @@ import { ProformasComponent } from './pages/proformas/proformas.component';
 import { ModalProformaComponent } from './pages/proformas/modal-proforma/modal-proforma.component';
 import { CrearanimalComponent } from './pages/animal/crearanimal/crearanimal.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { ConstruccionComponent } from './pages/construccion/construccion.component';
+import { ModalConstruComponent } from './pages/construccion/modal-constru/modal-constru.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { LoginComponent } from './pages/auth/login/login.component';
     ModalProformaComponent,
     AnimalComponent,
     CrearanimalComponent,
-    LoginComponent
+    LoginComponent,
+    ConstruccionComponent,
+    ModalConstruComponent
   ],
   imports: [
     BrowserModule,
