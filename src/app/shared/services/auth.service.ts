@@ -1,12 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient         } from '@angular/common/http';
+import { Injectable         } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { User, UserResponse } from '../componets/models/user.interface';
-import { map, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
-
-
+import { environment        } from 'src/environments/environment';
+import { map, catchError    } from 'rxjs/operators';
+import { Router             } from '@angular/router';
+import { User, UserResponse } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +30,8 @@ export class AuthService  {
         this.user.next(user);
         return user;
 
-      }),catchError((err)=>this.handleError(err)
-       )
-
-
+      }),
+      catchError((err)=>this.handleError(err))
     );
 
   }
@@ -47,13 +43,14 @@ export class AuthService  {
   }
 
 
-  saveStorage(user: UserResponse): void{
-    const { yourToken } = user;
+  saveStorage(user: UserResponse): void {
+    const { yourToken, id } = user;
     localStorage.setItem('userToken', yourToken);
+    localStorage.setItem('idUsuario', id.toString());
   }
 
   
-  handleError(error: any): Observable<never>{
+  handleError(error: any): Observable<never> {
  
     let mensajeError='Error desconocido';
     if(error){

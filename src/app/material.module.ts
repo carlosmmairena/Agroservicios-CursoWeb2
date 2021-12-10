@@ -3,16 +3,17 @@ import { MatButtonModule    } from "@angular/material/button";
 import { MatListModule      } from "@angular/material/list";
 import { MatCardModule      } from "@angular/material/card";
 import { MatToolbarModule   } from "@angular/material/toolbar";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule     } from "@angular/material/input";
 import { MatSidenavModule   } from "@angular/material/sidenav";
 import { MatIconModule      } from "@angular/material/icon";
 import { MatMenuModule      } from "@angular/material/menu";
-import { MatDialogModule   } from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatPaginatorModule} from '@angular/material/paginator';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableModule     } from "@angular/material/table";
+import { MatDialogModule    } from "@angular/material/dialog";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
 
 
 
@@ -27,14 +28,18 @@ const modules=[
     MatSidenavModule,
     MatIconModule,
     MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatSelectModule,
+    MatOptionModule,
+    MatSortModule
 ];
 
 @NgModule({
     imports:[...modules],
-    exports:[...modules],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    exports:[...modules]
 })
+
 
 export class MaterialModule{}

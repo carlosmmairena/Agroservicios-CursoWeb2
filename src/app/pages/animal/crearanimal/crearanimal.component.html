@@ -1,0 +1,61 @@
+<span class="titulo">{{titulo}}</span>
+
+<div class="modal" >
+  <form [formGroup]="formCrear.baseForm">
+    
+    <mat-form-field class="full-width-input" *ngIf="!isNew">
+        <input formControlName="id" matInput placeholder="Id Animal" readonly> 
+
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+        <input formControlName="color" matInput placeholder="Color" required> 
+
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+        <input formControlName="peso" matInput placeholder="Peso" required type="number"> 
+
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+        <mat-label>Tipo Animal</mat-label>
+        <mat-select formControlName="tipo" required>
+            <mat-option value="user">Perros</mat-option>
+            <mat-option value="user">Gatos</mat-option>
+            <mat-option value="user">Conejos</mat-option>
+            <mat-option value="user">Aves</mat-option>
+            <mat-option value="user">Reptiles</mat-option>
+        </mat-select> 
+
+    </mat-form-field>
+    
+    <mat-form-field class="full-width-input">
+        <input formControlName="raza" matInput placeholder="Raza" required> 
+
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+        <input formControlName="Descripcion" matInput placeholder="Descripcion" required> 
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+
+        <mat-label>Estado:</mat-label>
+
+        <mat-select formControlName="estado" [required]="true">
+
+        <mat-option [value]="true">Activo</mat-option>
+
+        <mat-option [value]="false">Inactivo</mat-option>
+
+        </mat-select>
+
+        </mat-form-field>
+    
+  </form>
+
+    
+</div>
+
+<div>
+    <button mat-raised-button (click)="guardar()" color="warn">Guardar</button>
+    <button mat-raised-button mat-dialog-close>Salir</button>
+</div>
