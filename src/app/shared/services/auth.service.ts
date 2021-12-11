@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User, UserResponse } from '../componets/models/user.interface';
+import { User, UserResponse } from '../models/user.interface';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 

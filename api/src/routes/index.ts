@@ -12,5 +12,5 @@ ROUTER.use('/usuario', USER_ROUTER);
 ROUTER.use('/producto', PRODUCT_ROUTER);
 ROUTER.use('/proforma', [checkJWT], PROFORMA_ROUTER);
 ROUTER.use('/auth', AUTH_ROUTER);
-ROUTER.use('/veterinarios', AUTH_ROUTER);
+ROUTER.use('/veterinarios', [checkJWT], AUTH_ROUTER);
 export default ROUTER;

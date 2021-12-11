@@ -13,10 +13,12 @@ export class ModalveterianriosComponent implements OnInit {
   tipoAnimal="";
   mensaje="";
   isNew: boolean= false;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-  public formVeterinarios: VeterinariosFormGroup,
-  private veterinarioSrv: VeterinariosService,
-  public dialogRef: MatDialogRef<ModalveterianriosComponent>
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public formVeterinarios: VeterinariosFormGroup,
+    private veterinarioSrv: VeterinariosService,
+    public dialogRef: MatDialogRef<ModalveterianriosComponent>
   ) { }
 
   ngOnInit(): void {
@@ -35,21 +37,28 @@ export class ModalveterianriosComponent implements OnInit {
     }
     console.log(this.isNew)
   }
+
   pathFormData():void{
     this.formVeterinarios.baseForm.patchValue({
-      id:this.data?.veteri?.id,
-      tipoAnimal:this.data?.veteri?.tipoAnimal,
-     idProducto:this.data?.veteri?.idProducto,
+      id: this.data?.veteri?.id,
+      nombre: this.data?.veteri?.producto.nombre,
+      descripcion: this.data?.veteri?.producto.descripcion,
+      precioUnitario: this.data?.veteri?.producto.precioUnitario,
+      marca: this.data?.veteri?.producto.marca,
+      stock: this.data?.veteri?.producto.stock,
+      unidadMedida: this.data?.veteri?.producto.unidadMedida,
+      estado: this.data?.veteri?.producto.estado,
+      tipoAnimal: this.data?.veteri?.tipoAnimal,
     });
   }
+
   guardar():void{
     
     //Si esta invalido retorne un error
     if (this.formVeterinarios.baseForm.invalid)
     return;
 
-    const veterina= this.formVeterinarios.baseForm.value;
-    const vete= this.formVeterinarios.basForm.value;
+    const veterina = this.formVeterinarios.baseForm.value;
 
     //Dato Nuevo
     if(this.isNew){
@@ -72,5 +81,5 @@ export class ModalveterianriosComponent implements OnInit {
     }
 
     
-}
+  }
 }

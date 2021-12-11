@@ -5,5 +5,5 @@ export interface User{
 
 export interface UserResponse{
     mensaje: string;
-    token: string;
+    yourToken: string;
 }

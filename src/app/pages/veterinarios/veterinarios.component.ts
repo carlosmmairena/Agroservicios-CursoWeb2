@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Veterinarios } from 'src/app/shared/componets/models/veterinarios.interface';
+import { Veterinarios } from 'src/app/shared/models/veterinarios.interface';
 import { VeterinariosService } from 'src/app/shared/services/veterinarios.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
