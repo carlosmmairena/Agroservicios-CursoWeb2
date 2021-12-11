@@ -14,7 +14,7 @@ import { ModalveterianriosComponent } from './modalveterianrios/modalveterianrio
 })
 export class VeterinariosComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'tipoAnimal','nombre', 'acciones' ];
+  displayedColumns: string[] = ['id', 'tipoAnimal','nombre', 'acciones'];
   dataSource: MatTableDataSource<Veterinarios>;
 
 
@@ -22,7 +22,7 @@ export class VeterinariosComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(null!);
 
-   }
+  }
 
 
   ngOnInit(): void {

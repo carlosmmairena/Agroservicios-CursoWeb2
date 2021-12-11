@@ -22,8 +22,7 @@ export class ModalveterianriosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.tipoAnimal= this.data?.veteri?.tipoAnimal;
-    if(this.data!.veteri){
+    if(this.data!.veteri) {
 
       this.isNew=false;
 
@@ -40,15 +39,15 @@ export class ModalveterianriosComponent implements OnInit {
 
   pathFormData():void{
     this.formVeterinarios.baseForm.patchValue({
-      id: this.data?.veteri?.id,
-      nombre: this.data?.veteri?.producto.nombre,
-      descripcion: this.data?.veteri?.producto.descripcion,
+      id:             this.data?.veteri?.id,
+      nombre:         this.data?.veteri?.producto.nombre,
+      descripcion:    this.data?.veteri?.producto.descripcion,
       precioUnitario: this.data?.veteri?.producto.precioUnitario,
-      marca: this.data?.veteri?.producto.marca,
-      stock: this.data?.veteri?.producto.stock,
-      unidadMedida: this.data?.veteri?.producto.unidadMedida,
-      estado: this.data?.veteri?.producto.estado,
-      tipoAnimal: this.data?.veteri?.tipoAnimal,
+      marca:          this.data?.veteri?.producto.marca,
+      stock:          this.data?.veteri?.producto.stock,
+      unidadMedida:   this.data?.veteri?.producto.unidadMedida,
+      estado:         this.data?.veteri?.producto.estado,
+      tipoAnimal:     this.data?.veteri?.tipoAnimal,
     });
   }
 
