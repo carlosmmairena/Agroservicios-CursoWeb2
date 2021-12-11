@@ -2,24 +2,24 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Usuarios } from 'src/app/shared/models/usuarios.interface';
-import { UsuariosService } from 'src/app/shared/services/usuarios.service';
+import { Clientes } from 'src/app/shared/models/clientes.interface';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
 
 @Component({
-  selector: 'app-Usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  selector: 'app-Clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.scss']
 })
-export class UsuariosComponent implements OnInit {
+export class ClientesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'nombre', 'email', 'registro'];
-  dataSource: MatTableDataSource<Usuarios>;
+  displayedColumns: string[] = ['id', 'email'];
+  dataSource: MatTableDataSource<Clientes>;
 /*
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 */
 
-  constructor(private srvUsuarios : UsuariosService) {
+  constructor(private srvClientes : ClientesService) {
 
     this.dataSource = new MatTableDataSource(null!);
 
@@ -32,7 +32,7 @@ export class UsuariosComponent implements OnInit {
 */
   ngOnInit(): void {
 
-    this.srvUsuarios.getAll().subscribe((lista)=>{
+    this.srvClientes.getAll().subscribe((lista)=>{
 
      console.log(lista);
 

@@ -19,6 +19,8 @@ import { LoginModule } from './pages/auth/login/login.module';
 import { VeterinariosModule } from './pages/veterinarios/veterinarios.module';
 import { ConstruccionComponent } from './pages/construccion/construccion.component';
 import { ModalConstruComponent } from './pages/construccion/modal-constru/modal-constru.component';
+import { UsuariosModule } from './pages/usuarios/usuarios.module';
+import { ClientesModule } from './pages/clientes/clientes.module';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { ModalConstruComponent } from './pages/construccion/modal-constru/modal-
     ReactiveFormsModule,
     HttpClientModule,
     LoginModule,
-    VeterinariosModule
+    VeterinariosModule,
+    UsuariosModule,
+    ClientesModule
 
   ],
   providers: [],
