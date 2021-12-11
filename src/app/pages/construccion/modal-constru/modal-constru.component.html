@@ -1,23 +1,59 @@
 <span class="titulo">{{titulo}}</span>
 
 <mat-dialog-content>
-    <form [formGroup]= "formConstru.baseForm" >
+    <form [formGroup]= "formConstru.baseForm">
         <mat-form-field class="full-width-input" *ngIf="!isNew">
             <input formControlName= "id" matInput placeholder="id" readonly>
         </mat-form-field>
 
-        <mat-form-field class="full-width-input">
-            <input formControlName= "producto" matInput placeholder="producto" required>
+        <mat-form-field appearance="fill">
+            <mat-label>¿Es frágil?</mat-label>
+
+            <mat-select formControlName="fragil">
+                <mat-option [value]="true">SI</mat-option>
+                <mat-option [value]="false">NO</mat-option>
+            </mat-select>
         </mat-form-field>
+    
         <mat-form-field class="full-width-input">
-            <input formControlName= "fragil" matInput placeholder="fragil" required>
+            <input formControlName= "nombre" matInput placeholder="nombre" required>
         </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName= "descripcion" matInput placeholder="descripcion" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName= "marca" matInput placeholder= "marca" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName="precioUnitario" matInput type="number" placeholder="precioUnitario" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName= "stock" matInput type="number" placeholder="stock" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName= "unidadMedida" matInput placeholder="unidadMedida" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Estado:</mat-label>
+
+            <mat-select formControlName="estado">
+                <mat-option [value]="true">Activa</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+
     </form>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button (click) ="guardar()">Aceptar</button>
+    <button mat-button (click)="guardar()">Guardar</button>
     <button mat-button mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>
 

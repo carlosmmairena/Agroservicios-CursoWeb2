@@ -13,7 +13,7 @@ import { ModalConstruComponent } from './modal-constru/modal-constru.component';
 })
 export class ConstruccionComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'producto', 'acciones'];
+  displayedColumns: string[] = ['id', 'producto', 'fragil', 'precio','acciones'];
   dataSource: MatTableDataSource<Construccion>;
 
   //@ViewChild(MatPaginator) paginator: MatPaginator;

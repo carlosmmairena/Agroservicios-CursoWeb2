@@ -50,9 +50,9 @@ export class ModalConstruComponent implements OnInit {
   }
 
   guardar():void{
-    if ( this.formConstru.baseForm.invalid)
-     return;
-
+    if (this.formConstru.baseForm.invalid){
+      return;
+    }
      const constru = this.formConstru.baseForm.value;
 
      if(this.isNew){
@@ -62,6 +62,7 @@ export class ModalConstruComponent implements OnInit {
       },(err)=>{
         alert(err);
       });
+      
      }else{
       this.construSrv.update(constru).subscribe((datos)=>{
         alert("Se modifico correctamente");

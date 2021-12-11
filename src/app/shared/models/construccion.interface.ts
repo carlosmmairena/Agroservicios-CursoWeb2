@@ -1,5 +1,11 @@
 export interface Construccion{
     id: number,
-    producto: string,
-    fragil: boolean
+    fragil: boolean,
+    nombre: string,
+    descripcion: string,
+    marca: string,
+    precioUnitario: number,
+    stock: number,
+    unidadMedida: string,
+    estado: boolean,
 }

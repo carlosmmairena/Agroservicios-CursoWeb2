@@ -35,21 +35,21 @@ export class ConstruccionService {
     const token = localStorage.getItem('userToken')!;
     const header = new HttpHeaders().set('api_token', token);
 
-    return this.http.delete<any>(`${environment.URL}/construccion/${id}`,{headers:header}).pipe(catchError(this.handleError));
+    return this.http.delete<any>(`${environment.URL}/producto/${id}`,{headers:header}).pipe(catchError(this.handleError));
   }
 
   save(constru: Construccion):Observable<any>{
     const token = localStorage.getItem('userToken')!;
     const header = new HttpHeaders().set('api_token', token);
 
-    return this.http.post<any>(`${environment.URL}/construccion/`,constru, { headers: header }).pipe(catchError(this.handleError));
+    return this.http.post<any>(`${environment.URL}/producto/construccion`,constru, { headers: header }).pipe(catchError(this.handleError));
   }
 
   update(constru: Construccion):Observable<any>{
     const token = localStorage.getItem('userToken')!;
     const header = new HttpHeaders().set('api_token', token);
 
-    return this.http.patch<any>(`${environment.URL}/construccion/${constru.id}`,constru, { headers: header }).pipe(catchError(this.handleError));
+    return this.http.patch<any>(`${environment.URL}/producto/construccion${constru.id}`,constru, { headers: header }).pipe(catchError(this.handleError));
   }
 
 }
