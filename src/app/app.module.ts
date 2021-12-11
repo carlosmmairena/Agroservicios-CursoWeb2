@@ -11,6 +11,7 @@ import { SidebarModule } from './shared/componets/sidebar/sidebar.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { VeterinariosModule } from './pages/veterinarios/veterinarios.module';
 import { AnimalComponent } from './pages/animal/animal.component';
 import { ProformasComponent } from './pages/proformas/proformas.component';
 import { ModalProformaComponent } from './pages/proformas/modal-proforma/modal-proforma.component';
@@ -40,7 +41,9 @@ import { ModalConstruComponent } from './pages/construccion/modal-constru/modal-
     MaterialModule,
     SidebarModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginModule,
+    VeterinariosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

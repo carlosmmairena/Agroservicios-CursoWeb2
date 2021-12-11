@@ -5,7 +5,8 @@ import { AdminComponent } from './pages/auth/admin/admin.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProformasComponent } from './pages/proformas/proformas.component';
-import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { UsuariosComponent } from './pages/pages/usuarios/usuarios.component';
+import { VeterinariosComponent } from './pages/veterinarios/veterinarios.component';
 import { ConstruccionComponent } from './pages/construccion/construccion.component';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'home',      component: HomeComponent      },
   { path: 'usuarios',  component: UsuariosComponent  },
   { path: 'proformas', component: ProformasComponent },
+  { path: 'veterinarios', component: VeterinariosComponent },
   { path: 'animal',    component: AnimalComponent    },
   { path: 'construcciones', component: ConstruccionComponent },
 ];
