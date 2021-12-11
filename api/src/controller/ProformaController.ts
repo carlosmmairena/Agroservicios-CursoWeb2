@@ -19,7 +19,7 @@ export class ProformaController {
         const proformaRepository = getRepository(Proforma);
 
         //const proformas = await proformaRepository.find();
-        const proformas = await proformaRepository.find({ where: { estado: true } });
+        const proformas = await proformaRepository.find({ where: { estado: true }, order: { id: "DESC" } });
 
         return response.status(200).json({ proformas: proformas, message: 'Proformas encontradas.' });
     }

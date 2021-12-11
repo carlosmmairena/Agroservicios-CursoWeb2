@@ -1,6 +1,19 @@
-
-
 <mat-nav-list>
+
+   <a mat-list-item [routerLink]="'/home'">
+      <mat-icon>manage_accounts</mat-icon>
+      <span class="nsv-link">Inicio</span>
+   </a>
+
+   <a mat-list-item [routerLink]="'/admin'">
+    <mat-icon>manage_accounts</mat-icon>
+    <span class="nsv-link">Admin</span>
+   </a>
+
+   <a mat-list-item [routerLink]="'/usuarios'">
+      <mat-icon>manage_accounts</mat-icon>
+      <span class="nsv-link">Usuarios</span>
+   </a>
 
   <a mat-list-item [routerLink]="'/veterinarios'">
      <mat-icon>manage_accounts</mat-icon>
@@ -12,5 +25,14 @@
       <span class="nsv-link">Proformas</span>
    </a>
 
-</mat-nav-list>
+   <a mat-list-item [routerLink]="'/animal'">
+      <mat-icon>pets</mat-icon>
+      <span class="nsv-link">Animales</span>
+   </a>
 
+   <a mat-list-item [routerLink]="'/construcciones'">
+      <mat-icon>home</mat-icon>
+      <span class="nsv-link">Productos de Construcciones</span>
+   </a>
+
+</mat-nav-list>

@@ -1,8 +1,10 @@
 .footer {
-    position: center;
+    
     bottom: 0;
     width: 100%;
     height: 50px;
     background-color: hsl(22, 81%, 60%);
     text-align: center;
+
+    position: fixed;
 }

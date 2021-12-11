@@ -1,0 +1,23 @@
+<span class="titulo">{{titulo}}</span>
+
+<mat-dialog-content>
+    <form [formGroup]= "formConstru.baseForm" >
+        <mat-form-field class="full-width-input" *ngIf="!isNew">
+            <input formControlName= "id" matInput placeholder="id" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+            <input formControlName= "producto" matInput placeholder="producto" required>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+            <input formControlName= "fragil" matInput placeholder="fragil" required>
+        </mat-form-field>
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button (click) ="guardar()">Aceptar</button>
+    <button mat-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
+
