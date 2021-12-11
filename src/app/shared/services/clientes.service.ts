@@ -1,24 +1,22 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Usuarios } from '../models/usuarios.interface';
+import { Clientes } from '../models/clientes.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class ClientesService {
 
   constructor(private http: HttpClient, private route: Router) { }
 
 
-  getAll():Observable<Usuarios[]>{
-    const token = localStorage.getItem('userToken')!;
-    const header = new HttpHeaders().set('api_token', token);
-    
-    return this.http.get<Usuarios[]>(`${environment.URL}/usuario`, { headers: header }).pipe(catchError(this.handleError));
+  getAll():Observable<Clientes[]>{
+    //pipe recibe el error
+    return this.http.get<Clientes[]>(`${environment.URL}/clientes`).pipe(catchError(this.handleError));
     
   }
 
